@@ -57,7 +57,7 @@ class _HomeDesktopLayoutState extends State<HomeDesktopLayout> {
               ),
             ),
             const SizedBox(height: 24),
-          ],
+          ]
         ),
       ),
     );
