@@ -12,8 +12,18 @@ class AppTheme {
 
     colorScheme: const ColorScheme.light(
       primary: AppColors.lightPrimary,
+      onPrimary: AppColors.lightOnPrimary,
       secondary: AppColors.lightSecondary,
+      onSecondary: AppColors.lightOnSecondary,
       surface: AppColors.lightSurface,
+      onSurface: AppColors.lightText,
+      onSurfaceVariant: AppColors.lightSubtitle,
+      surfaceContainerHighest: AppColors.lightSurfaceVariant,
+      outline: AppColors.lightBorder,
+      outlineVariant: AppColors.lightBorder,
+      error: AppColors.lightError,
+      onError: AppColors.lightOnError,
+      shadow: AppColors.shadow,
     ),
 
     dividerColor: AppColors.lightBorder,
@@ -27,7 +37,7 @@ class AppTheme {
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.lightPrimary,
-        foregroundColor: Colors.white,
+        foregroundColor: AppColors.lightOnPrimary,
         elevation: 0,
         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 18),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
@@ -62,8 +72,18 @@ class AppTheme {
 
     colorScheme: const ColorScheme.dark(
       primary: AppColors.darkPrimary,
+      onPrimary: AppColors.darkOnPrimary,
       secondary: AppColors.darkSecondary,
+      onSecondary: AppColors.darkOnSecondary,
       surface: AppColors.darkSurface,
+      onSurface: AppColors.darkText,
+      onSurfaceVariant: AppColors.darkSubtitle,
+      surfaceContainerHighest: AppColors.darkSurfaceVariant,
+      outline: AppColors.darkBorder,
+      outlineVariant: AppColors.darkBorder,
+      error: AppColors.darkError,
+      onError: AppColors.darkOnError,
+      shadow: AppColors.shadow,
     ),
 
     dividerColor: AppColors.darkBorder,
@@ -77,7 +97,7 @@ class AppTheme {
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.darkPrimary,
-        foregroundColor: Colors.black,
+        foregroundColor: AppColors.darkOnPrimary,
         elevation: 0,
         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 18),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),

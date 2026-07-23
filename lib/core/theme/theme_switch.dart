@@ -10,6 +10,7 @@ class ThemeSwitch extends StatelessWidget {
     return BlocBuilder<ThemeCubit, ThemeMode>(
       builder: (context, themeMode) {
         final isDark = themeMode == ThemeMode.dark;
+        final colorScheme = Theme.of(context).colorScheme;
 
         return MouseRegion(
           cursor: SystemMouseCursors.click,
@@ -25,8 +26,8 @@ class ThemeSwitch extends StatelessWidget {
               padding: const EdgeInsets.all(4),
               decoration: BoxDecoration(
                 color: isDark
-                    ? const Color(0xff2B2B2B)
-                    : const Color(0xffE7E1D8),
+                    ? colorScheme.surfaceContainerHighest
+                    : colorScheme.primary.withValues(alpha: .14),
                 borderRadius: BorderRadius.circular(100),
               ),
               child: Stack(
@@ -39,10 +40,10 @@ class ThemeSwitch extends StatelessWidget {
                           child: AnimatedOpacity(
                             duration: const Duration(milliseconds: 250),
                             opacity: isDark ? .4 : 1,
-                            child: const Icon(
+                            child: Icon(
                               Icons.wb_sunny_rounded,
                               size: 18,
-                              color: Colors.orange,
+                              color: colorScheme.secondary,
                             ),
                           ),
                         ),
@@ -52,18 +53,16 @@ class ThemeSwitch extends StatelessWidget {
                           child: AnimatedOpacity(
                             duration: const Duration(milliseconds: 250),
                             opacity: isDark ? 1 : .4,
-                            child: const Icon(
+                            child: Icon(
                               Icons.nightlight_round,
                               size: 18,
-                              color: Colors.white,
+                              color: colorScheme.onPrimary,
                             ),
                           ),
                         ),
                       ),
                     ],
                   ),
-
-                  /// الدائرة المتحركة
                   AnimatedAlign(
                     duration: const Duration(milliseconds: 350),
                     curve: Curves.easeInOut,
@@ -74,12 +73,12 @@ class ThemeSwitch extends StatelessWidget {
                       width: 34,
                       height: 34,
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: colorScheme.surface,
                         shape: BoxShape.circle,
                         boxShadow: [
                           BoxShadow(
                             blurRadius: 10,
-                            color: Colors.black.withOpacity(.18),
+                            color: colorScheme.shadow.withValues(alpha: 0.18),
                             offset: const Offset(0, 4),
                           ),
                         ],
@@ -103,8 +102,8 @@ class ThemeSwitch extends StatelessWidget {
                           key: ValueKey(isDark),
                           size: 18,
                           color: isDark
-                              ? Colors.indigo
-                              : Colors.orange,
+                              ? colorScheme.primary
+                              : colorScheme.secondary,
                         ),
                       ),
                     ),
