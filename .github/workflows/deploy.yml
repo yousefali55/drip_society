@@ -14,23 +14,26 @@ jobs:
       deployments: write
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.35.4"
+          flutter-version: "3.44.2"
           channel: stable
           cache: true
+
+      - name: Verify Flutter Version
+        run: flutter --version
 
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Build Web
+      - name: Build Flutter Web
         run: flutter build web --release
 
-      - name: Publish to Cloudflare Pages
+      - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
