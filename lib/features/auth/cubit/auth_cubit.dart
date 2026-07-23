@@ -5,8 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit({AuthRepository? repository})
-      : _repository = repository ?? AuthRepository(),
-        super(const AuthState()) {
+    : _repository = repository ?? AuthRepository(),
+      super(const AuthState()) {
     _bootstrap();
   }
 
@@ -30,7 +30,14 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> login({required String email, required String password}) async {
-    emit(state.copyWith(status: AuthStatus.loading, errorMessage: null, successMessage: null, isSubmitting: true));
+    emit(
+      state.copyWith(
+        status: AuthStatus.loading,
+        errorMessage: null,
+        successMessage: null,
+        isSubmitting: true,
+      ),
+    );
 
     print('AuthCubit login email: $email');
     print('AuthCubit login password: $password');
@@ -70,7 +77,14 @@ class AuthCubit extends Cubit<AuthState> {
     required String city,
     required String postalCode,
   }) async {
-    emit(state.copyWith(status: AuthStatus.loading, errorMessage: null, successMessage: null, isSubmitting: true));
+    emit(
+      state.copyWith(
+        status: AuthStatus.loading,
+        errorMessage: null,
+        successMessage: null,
+        isSubmitting: true,
+      ),
+    );
 
     final result = await _repository.register(
       firstName: firstName,
@@ -126,7 +140,8 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> saveToken(String token) async => _repository.saveToken(token);
 
-  Future<void> saveCustomer(CustomerModel customer) async => _repository.saveCustomer(customer);
+  Future<void> saveCustomer(CustomerModel customer) async =>
+      _repository.saveCustomer(customer);
 
   Future<bool> isLoggedIn() async => _repository.isLoggedIn();
 }

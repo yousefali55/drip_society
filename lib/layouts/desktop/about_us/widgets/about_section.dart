@@ -27,8 +27,6 @@ class AboutSection extends StatelessWidget {
           ),
 
           const SizedBox(width: 90),
-
-          /// النص
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,10 +63,13 @@ class AboutSection extends StatelessWidget {
                 const SizedBox(height: 30),
 
                 Text(
-                  "At Drip Society, we don't simply serve coffee. "
-                  "We create an experience that inspires focus, creativity, "
-                  "and meaningful conversations. Every cup is crafted with "
-                  "care using premium beans and exceptional brewing techniques.",
+                  "Drip Society is dedicated to delivering premium coffee beans "
+                  "for those who value quality in every cup. "
+                  "We carefully source, roast, and package our coffee "
+                  "to preserve its rich aroma and authentic flavor. "
+                  " Every 200g bag reflects our passion for craftsmanship " 
+                  "ensuring a smooth and memorable coffee experience "
+                      "from the first sip to the last." ,
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                         height: 1.8,
                       ),
@@ -79,14 +80,14 @@ class AboutSection extends StatelessWidget {
 
                 const SizedBox(height: 40),
 
-                const _Feature("Premium Coffee Beans")
+                const _Feature("Ultra Premium Coffee ")
                     .animate()
                     .fade(delay: 650.ms)
                     .slideX(begin: .2),
 
                 const SizedBox(height: 18),
 
-                const _Feature("Expert Baristas")
+                const _Feature("Expert Beans Roasting")
                     .animate()
                     .fade(delay: 800.ms)
                     .slideX(begin: .2),

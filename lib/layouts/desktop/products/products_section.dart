@@ -5,6 +5,7 @@ import 'package:drip_society/layouts/desktop/products/widgets/error_view.dart';
 import 'package:drip_society/layouts/desktop/products/widgets/products_grid.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class ProductsSection extends StatelessWidget {
@@ -41,33 +42,14 @@ class ProductsSection extends StatelessWidget {
               const SizedBox(height: 12),
               ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 650),
-                child: const Text(
+                child: Text(
                   'Discover handcrafted premium coffee beans carefully roasted to bring unforgettable flavor in every cup.',
                   textAlign: TextAlign.center,
+                  style: GoogleFonts.roboto(fontSize: 30, height: 1.8),
                 ),
               ),
               const SizedBox(height: 24),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Search coffee',
-                    prefixIcon: const Icon(Icons.search),
-                    filled: true,
-                    fillColor: Theme.of(
-                      context,
-                    ).colorScheme.surfaceContainerHighest,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(999),
-                      borderSide: BorderSide.none,
-                    ),
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 14,
-                    ),
-                  ),
-                ),
-              ),
+              Padding(padding: const EdgeInsets.symmetric(horizontal: 24)),
               const SizedBox(height: 32),
               AnimatedSwitcher(
                 duration: const Duration(milliseconds: 350),
@@ -79,20 +61,18 @@ class ProductsSection extends StatelessWidget {
                 child: isLoading
                     ? const _ProductsSkeletonGrid(key: ValueKey('loading'))
                     : isError
-                        ? ErrorView(
-                            key: const ValueKey('error'),
-                            message: state.errorMessage,
-                            onRetry: () =>
-                                context.read<ProductsCubit>().getProducts(),
-                          )
-                        : isSuccess
-                            ? _ProductsGridContent(
-                                key: const ValueKey('products'),
-                                products: state.products,
-                              )
-                            : const SizedBox.shrink(
-                                key: ValueKey('empty'),
-                              ),
+                    ? ErrorView(
+                        key: const ValueKey('error'),
+                        message: state.errorMessage,
+                        onRetry: () =>
+                            context.read<ProductsCubit>().getProducts(),
+                      )
+                    : isSuccess
+                    ? _ProductsGridContent(
+                        key: const ValueKey('products'),
+                        products: state.products,
+                      )
+                    : const SizedBox.shrink(key: ValueKey('empty')),
               ),
             ],
           );
@@ -117,24 +97,15 @@ class _ProductsSkeletonGrid extends StatelessWidget {
 }
 
 class _ProductsGridContent extends StatelessWidget {
-  const _ProductsGridContent({
-    super.key,
-    required this.products,
-  });
+  const _ProductsGridContent({super.key, required this.products});
 
   final List<ProductModel> products;
 
   @override
   Widget build(BuildContext context) {
     return ResponsiveLayout(
-      mobile: ProductsGrid(
-        products: products,
-        crossAxisCount: 2,
-      ),
-      desktop: ProductsGrid(
-        products: products,
-        crossAxisCount: 4,
-      ),
+      mobile: ProductsGrid(products: products, crossAxisCount: 2),
+      desktop: ProductsGrid(products: products, crossAxisCount: 4),
     );
   }
 }
