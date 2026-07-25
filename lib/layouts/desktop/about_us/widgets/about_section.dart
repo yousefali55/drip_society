@@ -6,143 +6,136 @@ class AboutSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.sizeOf(context).width;
+    final horizontalPadding = (width * .07).clamp(42.0, 100.0).toDouble();
+
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(
-        horizontal: 100,
-        vertical: 120,
+      padding: EdgeInsets.fromLTRB(
+        horizontalPadding,
+        110,
+        horizontalPadding,
+        118,
       ),
       color: Colors.transparent,
-      child: Row(
-        children: [
-          Expanded(
-            child: Image.asset(
-              "assets/images/about_beans.png",
-              height: 550,
-              fit: BoxFit.contain,
-            )
-                .animate()
-                .fade(duration: 700.ms)
-                .slideX(begin: -.3),
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 1180),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final isNarrow = constraints.maxWidth < 860;
+              final image = Center(
+                child: Image.asset(
+                  'assets/images/coffeecup-1.png',
+                  height: isNarrow ? 340 : 500,
+                  fit: BoxFit.contain,
+                ),
+              ).animate().fade(duration: 650.ms).slideY(begin: .12);
+
+              final copy = _AboutCopy(isNarrow: isNarrow);
+
+              if (isNarrow) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    image,
+                    const SizedBox(height: 42),
+                    copy,
+                  ],
+                );
+              }
+
+              return Row(
+                children: [
+                  Expanded(child: image),
+                  const SizedBox(width: 92),
+                  Expanded(child: copy),
+                ],
+              );
+            },
           ),
-
-          const SizedBox(width: 90),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "ABOUT US",
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.primary,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 3,
-                  ),
-                )
-                    .animate()
-                    .fade(delay: 200.ms)
-                    .slideX(begin: .2),
-
-                const SizedBox(height: 20),
-
-                Text(
-                  "Brewing Experiences,\nNot Just Coffee.",
-                  style: Theme.of(context)
-                      .textTheme
-                      .displaySmall
-                      ?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        height: 1.2,
-                      ),
-                )
-                    .animate()
-                    .fade(delay: 350.ms)
-                    .slideX(begin: .2),
-
-                const SizedBox(height: 30),
-
-                Text(
-                  "Drip Society is dedicated to delivering premium coffee beans "
-                  "for those who value quality in every cup. "
-                  "We carefully source, roast, and package our coffee "
-                  "to preserve its rich aroma and authentic flavor. "
-                  " Every 200g bag reflects our passion for craftsmanship " 
-                  "ensuring a smooth and memorable coffee experience "
-                      "from the first sip to the last." ,
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        height: 1.8,
-                      ),
-                )
-                    .animate()
-                    .fade(delay: 500.ms)
-                    .slideX(begin: .2),
-
-                const SizedBox(height: 40),
-
-                const _Feature("Ultra Premium Coffee ")
-                    .animate()
-                    .fade(delay: 650.ms)
-                    .slideX(begin: .2),
-
-                const SizedBox(height: 18),
-
-                const _Feature("Expert Beans Roasting")
-                    .animate()
-                    .fade(delay: 800.ms)
-                    .slideX(begin: .2),
-
-                const SizedBox(height: 18),
-
-                const _Feature("Freshly Brewed Everyday")
-                    .animate()
-                    .fade(delay: 950.ms)
-                    .slideX(begin: .2),
-
-                const SizedBox(height: 45),
-
-                FilledButton(
-                  onPressed: () {},
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 25,
-                      vertical: 18,
-                    ),
-                    child: Text("Discover More"),
-                  ),
-                )
-                    .animate()
-                    .scale(
-                      begin: const Offset(.8, .8),
-                      delay: 1100.ms,
-                    )
-                    .fade(),
-              ],
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
 }
 
-class _Feature extends StatelessWidget {
-  final String title;
+class _AboutCopy extends StatelessWidget {
+  const _AboutCopy({required this.isNarrow});
 
+  final bool isNarrow;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'ABOUT US',
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.primary,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 3,
+          ),
+        ).animate().fade(delay: 120.ms).slideY(begin: .12),
+        const SizedBox(height: 18),
+        Text(
+          'Brewing Experiences,\nNot Just Coffee.',
+          style: (isNarrow
+                  ? Theme.of(context).textTheme.headlineMedium
+                  : Theme.of(context).textTheme.displaySmall)
+              ?.copyWith(fontWeight: FontWeight.bold, height: 1.15),
+        ).animate().fade(delay: 220.ms).slideY(begin: .12),
+        const SizedBox(height: 24),
+        Text(
+          "At Drip Society, we don't simply serve coffee. "
+          'We create an experience that inspires focus, creativity, '
+          'and meaningful conversations. Every cup is crafted with '
+          'care using premium beans and exceptional brewing techniques.',
+          style: Theme.of(context).textTheme.bodyLarge?.copyWith(height: 1.8),
+        ).animate().fade(delay: 320.ms).slideY(begin: .12),
+        const SizedBox(height: 34),
+        const _Feature(
+          'Premium Coffee Beans',
+        ).animate().fade(delay: 420.ms).slideY(begin: .12),
+        const SizedBox(height: 16),
+        const _Feature(
+          'Expert Coffee',
+        ).animate().fade(delay: 520.ms).slideY(begin: .12),
+        const SizedBox(height: 16),
+        const _Feature(
+          'Freshly Brewed Everyday',
+        ).animate().fade(delay: 620.ms).slideY(begin: .12),
+        const SizedBox(height: 36),
+        FilledButton(
+          onPressed: () {},
+          child: const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 25, vertical: 18),
+            child: Text('Discover More'),
+          ),
+        ).animate().fade(delay: 720.ms).scale(begin: const Offset(.96, .96)),
+      ],
+    );
+  }
+}
+
+class _Feature extends StatelessWidget {
   const _Feature(this.title);
+
+  final String title;
 
   @override
   Widget build(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Icon(
           Icons.check_circle_rounded,
           color: Theme.of(context).colorScheme.primary,
         ),
-        const SizedBox(width: 15),
-        Text(
-          title,
-          style: Theme.of(context).textTheme.titleMedium,
+        const SizedBox(width: 14),
+        Expanded(
+          child: Text(title, style: Theme.of(context).textTheme.titleMedium),
         ),
       ],
     );

@@ -1,9 +1,9 @@
-
-
+import 'package:drip_society/layouts/desktop/about_us/widgets/about_section.dart';
 import 'package:drip_society/layouts/desktop/hero/widgets/hero_section.dart';
 import 'package:drip_society/layouts/desktop/products/data/cubit/products_cubit.dart';
 import 'package:drip_society/layouts/desktop/products/data/products_repo.dart';
 import 'package:drip_society/layouts/desktop/products/products_section.dart';
+import 'package:drip_society/layouts/desktop/widgets/desktop_footer.dart';
 import 'package:drip_society/layouts/widgets/navbar_desktop.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,7 +18,10 @@ class HomeDesktopLayout extends StatefulWidget {
 class _HomeDesktopLayoutState extends State<HomeDesktopLayout> {
   final ScrollController _controller = ScrollController();
 
+  final GlobalKey _homeKey = GlobalKey();
+  final GlobalKey _aboutKey = GlobalKey();
   final GlobalKey _productsKey = GlobalKey();
+  final GlobalKey _contactKey = GlobalKey();
 
   @override
   void dispose() {
@@ -45,8 +48,17 @@ class _HomeDesktopLayoutState extends State<HomeDesktopLayout> {
         physics: const BouncingScrollPhysics(),
         child: Column(
           children: [
-            const DesktopNavbar(),
-            HeroSection(onExplore: () => _scrollTo(_productsKey)),
+            DesktopNavbar(
+              onHomeTap: () => _scrollTo(_homeKey),
+              onAboutTap: () => _scrollTo(_aboutKey),
+              onProductsTap: () => _scrollTo(_productsKey),
+              onContactTap: () => _scrollTo(_contactKey),
+            ),
+            SizedBox(
+              key: _homeKey,
+              child: HeroSection(onExplore: () => _scrollTo(_productsKey)),
+            ),
+            SizedBox(key: _aboutKey, child: const AboutSection()),
             const SizedBox(height: 24),
             SizedBox(
               key: _productsKey,
@@ -56,8 +68,25 @@ class _HomeDesktopLayoutState extends State<HomeDesktopLayout> {
                 child: const ProductsSection(),
               ),
             ),
-            const SizedBox(height: 24),
-          ]
+            const SizedBox(height: 72),
+            SizedBox(
+              key: _contactKey,
+              child: DesktopFooter(
+                onNavTap: (target) {
+                  switch (target) {
+                    case FooterNavTarget.home:
+                      _scrollTo(_homeKey);
+                    case FooterNavTarget.about:
+                      _scrollTo(_aboutKey);
+                    case FooterNavTarget.products:
+                      _scrollTo(_productsKey);
+                    case FooterNavTarget.contact:
+                      _scrollTo(_contactKey);
+                  }
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );
