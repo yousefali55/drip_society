@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:drip_society/layouts/desktop/cart/widgets/cart_badge.dart';
 import 'package:drip_society/layouts/desktop/hero/data/hero_data.dart';
 import 'package:drip_society/layouts/widgets/logo_app.dart';
 import 'package:flutter/material.dart';
@@ -10,10 +11,12 @@ class MobileHeroSection extends StatefulWidget {
     super.key,
     required this.onMenuTap,
     required this.onExplore,
+    required this.onCart,
   });
 
   final VoidCallback onMenuTap;
   final VoidCallback onExplore;
+  final VoidCallback onCart;
 
   @override
   State<MobileHeroSection> createState() => _MobileHeroSectionState();
@@ -67,6 +70,8 @@ class _MobileHeroSectionState extends State<MobileHeroSection> {
               children: [
                 const LogoApp(),
                 const Spacer(),
+                CartBadge(onTap: widget.onCart),
+                const SizedBox(width: 10),
                 IconButton.filledTonal(
                   onPressed: widget.onMenuTap,
                   icon: const Icon(Icons.menu_rounded),

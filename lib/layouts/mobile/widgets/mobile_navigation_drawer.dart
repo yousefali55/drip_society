@@ -1,6 +1,5 @@
 import 'package:drip_society/core/theme/theme_switch.dart';
 import 'package:drip_society/features/auth/presentation/widgets/auth_menu_button.dart';
-import 'package:drip_society/layouts/desktop/cart/widgets/cart_badge.dart';
 import 'package:drip_society/layouts/widgets/logo_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -12,14 +11,12 @@ class MobileNavigationDrawer extends StatelessWidget {
     required this.onAbout,
     required this.onProducts,
     required this.onContact,
-    required this.onCart,
   });
 
   final VoidCallback onHome;
   final VoidCallback onAbout;
   final VoidCallback onProducts;
   final VoidCallback onContact;
-  final VoidCallback onCart;
 
   @override
   Widget build(BuildContext context) {
@@ -84,18 +81,6 @@ class MobileNavigationDrawer extends StatelessWidget {
                 ],
               ),
               const Spacer(),
-              Row(
-                children: [
-                  Text(
-                    'Cart',
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                  const Spacer(),
-                  CartBadge(onTap: () => _openCart(context)),
-                ],
-              ),
             ],
           ),
         ),
@@ -106,11 +91,6 @@ class MobileNavigationDrawer extends StatelessWidget {
   void _navigate(BuildContext context, VoidCallback onTap) {
     Navigator.of(context).pop();
     onTap();
-  }
-
-  void _openCart(BuildContext context) {
-    Navigator.of(context).pop();
-    Future<void>.delayed(const Duration(milliseconds: 180), onCart);
   }
 }
 

@@ -23,22 +23,22 @@ class DioClient {
             options.headers['Authorization'] = 'Bearer $token';
           }
 
-          print('Request URL: ${options.uri.toString()}');
-          print('Request Method: ${options.method}');
-          print('Request Headers: ${options.headers}');
+          // print('Request URL: ${options.uri.toString()}');
+          // print('Request Method: ${options.method}');
+          // print('Request Headers: ${options.headers}');
           return handler.next(options);
         },
         onResponse: (response, handler) {
-          print('Status Code: ${response.statusCode}');
-          print('Response Headers: ${response.headers.map}');
-          print('Raw Response: ${response.data}');
+          // print('Status Code: ${response.statusCode}');
+          // print('Response Headers: ${response.headers.map}');
+          // print('Raw Response: ${response.data}');
           return handler.next(response);
         },
         onError: (DioException e, handler) {
-          print('Exception Type: ${e.type}');
-          print('Exception Message: ${e.message}');
-          print('StackTrace: ${e.stackTrace}');
-          print('Response Data: ${e.response?.data}');
+          // print('Exception Type: ${e.type}');
+          // print('Exception Message: ${e.message}');
+          // print('StackTrace: ${e.stackTrace}');
+          // print('Response Data: ${e.response?.data}');
           return handler.next(e);
         },
       ),

@@ -1,4 +1,3 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:drip_society/core/responsive/responsive_layout.dart';
 import 'package:drip_society/layouts/desktop/products/data/cubit/products_cubit.dart';
 import 'package:drip_society/layouts/desktop/products/data/product_model.dart';
@@ -8,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:marquee/marquee.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class ProductsSection extends StatelessWidget {

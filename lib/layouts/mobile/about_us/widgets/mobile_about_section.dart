@@ -59,7 +59,7 @@ class MobileAboutSection extends StatelessWidget {
           ).animate().fade(delay: 420.ms).slideY(begin: .12),
           const SizedBox(height: 16),
           const _Feature(
-            'Expert Baristas',
+            'Expert Coffee',
           ).animate().fade(delay: 520.ms).slideY(begin: .12),
           const SizedBox(height: 16),
           const _Feature(

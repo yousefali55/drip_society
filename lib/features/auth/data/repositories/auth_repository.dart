@@ -31,8 +31,8 @@ class AuthRepository {
 
     for (final body in candidateBodies) {
       try {
-        final jsonBody = jsonEncode(body);
-        final bodyBytes = utf8.encode(jsonBody);
+        // final jsonBody = jsonEncode(body);
+        // final bodyBytes = utf8.encode(jsonBody);
         final options = Options(
           method: 'POST',
           headers: {
@@ -43,15 +43,15 @@ class AuthRepository {
           responseType: ResponseType.json,
         );
 
-        print('Complete request URL: ${ApiConstants.baseUrl}/Customers/login');
-        print('Complete request method: POST');
-        print('Complete request headers: ${options.headers}');
-        print('Complete request body: $jsonBody');
-        print('Complete request body bytes: $bodyBytes');
+        // print('Complete request URL: ${ApiConstants.baseUrl}/Customers/login');
+        // print('Complete request method: POST');
+        // print('Complete request headers: ${options.headers}');
+        // print('Complete request body: $jsonBody');
+        // print('Complete request body bytes: $bodyBytes');
 
         final response = await _dio.post('${ApiConstants.baseUrl}/Customers/login', data: body, options: options);
-        print('Complete response status: ${response.statusCode}');
-        print('Complete response body: ${response.data}');
+        // print('Complete response status: ${response.statusCode}');
+        // print('Complete response body: ${response.data}');
 
         final payload = response.data is Map<String, dynamic>
             ? response.data as Map<String, dynamic>
@@ -66,10 +66,10 @@ class AuthRepository {
           return AuthResult.success(token: token, customer: customer, message: 'Welcome back!');
         }
       } on DioException catch (error) {
-        print('Complete DioException: ${error.type}');
-        print('Complete DioException message: ${error.message}');
-        print('Complete DioException response body: ${error.response?.data}');
-        print('Complete DioException response headers: ${error.response?.headers.map}');
+        // print('Complete DioException: ${error.type}');
+        // print('Complete DioException message: ${error.message}');
+        // print('Complete DioException response body: ${error.response?.data}');
+        // print('Complete DioException response headers: ${error.response?.headers.map}');
         final message = _extractErrorMessage(error);
         if (!_looksLikePayloadMismatch(message)) {
           return AuthResult.failure(message);

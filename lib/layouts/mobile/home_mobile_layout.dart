@@ -50,7 +50,6 @@ class _MobileHomeLayoutState extends State<MobileHomeLayout> {
           onAbout: () => _scrollTo(_aboutKey),
           onProducts: () => _scrollTo(_productsKey),
           onContact: () => _scrollTo(_contactKey),
-          onCart: () => _openCart(context),
         ),
         body: Builder(
           builder: (scaffoldContext) {
@@ -65,6 +64,7 @@ class _MobileHomeLayoutState extends State<MobileHomeLayout> {
                       onMenuTap: () =>
                           Scaffold.of(scaffoldContext).openDrawer(),
                       onExplore: () => _scrollTo(_productsKey),
+                      onCart: () => _openCart(context),
                     ),
                   ),
                   SizedBox(key: _aboutKey, child: const MobileAboutSection()),
@@ -89,6 +89,9 @@ class _MobileHomeLayoutState extends State<MobileHomeLayout> {
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      barrierColor: Colors.black.withValues(alpha: 0.35),
+      elevation: 0,
       builder: (_) => const CartDrawer(),
     );
   }

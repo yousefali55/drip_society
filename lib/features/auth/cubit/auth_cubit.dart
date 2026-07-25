@@ -39,8 +39,8 @@ class AuthCubit extends Cubit<AuthState> {
       ),
     );
 
-    print('AuthCubit login email: $email');
-    print('AuthCubit login password: $password');
+    // print('AuthCubit login email: $email');
+    // print('AuthCubit login password: $password');
 
     final result = await _repository.login(email: email, password: password);
 

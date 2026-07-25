@@ -18,38 +18,40 @@ class CartBadge extends StatelessWidget {
           0,
           (sum, item) => sum + item.quantity,
         );
-        return AnimatedSwitcher(
-          duration: const Duration(milliseconds: 250),
-          child: InkWell(
-            key: ValueKey(count),
-            onTap: onTap,
-            borderRadius: BorderRadius.circular(999),
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                const Icon(Icons.shopping_cart_outlined, size: 24),
-                if (count > 0)
-                  Positioned(
-                    top: -2,
-                    right: -2,
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 250),
-                      padding: const EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                        color: colorScheme.error,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Text(
-                        '$count',
-                        style: TextStyle(
-                          color: colorScheme.onError,
-                          fontSize: 10,
-                          fontWeight: FontWeight.bold,
+        return Center(
+          child: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 250),
+            child: InkWell(
+              key: ValueKey(count),
+              onTap: onTap,
+              borderRadius: BorderRadius.circular(999),
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  const Icon(Icons.shopping_cart_outlined, size: 24),
+                  if (count > 0)
+                    Positioned(
+                      top: -2,
+                      right: -2,
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 250),
+                        padding: const EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          color: colorScheme.error,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Text(
+                          '$count',
+                          style: TextStyle(
+                            color: colorScheme.onError,
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-              ],
+                ],
+              ),
             ),
           ),
         );

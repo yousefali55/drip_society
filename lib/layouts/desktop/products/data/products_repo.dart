@@ -48,17 +48,17 @@ class ProductsRepository {
     }
 
     try {
-      print('Repository: requesting ${ApiConstants.baseUrl}${ApiConstants.productsEndpoint}');
+      // print('Repository: requesting ${ApiConstants.baseUrl}${ApiConstants.productsEndpoint}');
       final response = await _dioClient.dio.get(ApiConstants.productsEndpoint);
       final payload = response.data is Map<String, dynamic>
           ? response.data as Map<String, dynamic>
           : Map<String, dynamic>.from(response.data);
-      print('Repository: reading response.data["data"]');
+      // print('Repository: reading response.data["data"]');
       final model = ProductsResponse.fromJson(payload);
-      print('Repository: parsed ${model.products.length} products');
+      // print('Repository: parsed ${model.products.length} products');
       return model.products.isEmpty ? offlineProducts : model.products;
     } on DioException catch (e) {
-      print('Repository DioException: ${e.toString()}');
+      // print('Repository DioException: ${e.toString()}');
       return offlineProducts;
     } catch (error, stackTrace) {
       print('Repository unexpected error: $error');

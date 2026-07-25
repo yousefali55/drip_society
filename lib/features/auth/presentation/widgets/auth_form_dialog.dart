@@ -176,8 +176,8 @@ class _AuthFormDialogState extends State<AuthFormDialog> {
     final trimmedEmail = _emailController.text.trim();
     final password = _passwordController.text;
 
-    print('Email before calling login(): $trimmedEmail');
-    print('Password before calling login(): $password');
+    // print('Email before calling login(): $trimmedEmail');
+    // print('Password before calling login(): $password');
 
     final authCubit = context.read<AuthCubit>();
     if (widget.mode == AuthMode.login) {
