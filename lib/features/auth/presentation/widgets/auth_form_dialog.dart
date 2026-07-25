@@ -1,3 +1,4 @@
+import 'package:drip_society/core/widgets/egyptian_governorate_dropdown.dart';
 import 'package:drip_society/features/auth/cubit/auth_cubit.dart';
 import 'package:drip_society/features/auth/cubit/auth_state.dart';
 import 'package:drip_society/features/auth/data/validation/auth_validation.dart';
@@ -23,7 +24,6 @@ class _AuthFormDialogState extends State<AuthFormDialog> {
   final _phoneController = TextEditingController();
   final _passwordController = TextEditingController();
   final _cityController = TextEditingController();
-  final _postalCodeController = TextEditingController();
 
   bool _showPassword = false;
 
@@ -35,7 +35,6 @@ class _AuthFormDialogState extends State<AuthFormDialog> {
     _phoneController.dispose();
     _passwordController.dispose();
     _cityController.dispose();
-    _postalCodeController.dispose();
     super.dispose();
   }
 
@@ -52,13 +51,18 @@ class _AuthFormDialogState extends State<AuthFormDialog> {
               if (state.status == AuthStatus.authenticated) {
                 Navigator.of(context).pop();
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(state.successMessage ?? 'Signed in successfully')),
+                  SnackBar(
+                    content: Text(
+                      state.successMessage ?? 'Signed in successfully',
+                    ),
+                  ),
                 );
               }
-              if (state.status == AuthStatus.failure && state.errorMessage != null) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(state.errorMessage!)),
-                );
+              if (state.status == AuthStatus.failure &&
+                  state.errorMessage != null) {
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(SnackBar(content: Text(state.errorMessage!)));
               }
             },
             builder: (context, state) {
@@ -72,8 +76,11 @@ class _AuthFormDialogState extends State<AuthFormDialog> {
                         children: [
                           Expanded(
                             child: Text(
-                              widget.mode == AuthMode.login ? 'Welcome back' : 'Create account',
-                              style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.w700),
+                              widget.mode == AuthMode.login
+                                  ? 'Welcome back'
+                                  : 'Create account',
+                              style: Theme.of(context).textTheme.headlineSmall
+                                  ?.copyWith(fontWeight: FontWeight.w700),
                             ),
                           ),
                           IconButton(
@@ -93,17 +100,37 @@ class _AuthFormDialogState extends State<AuthFormDialog> {
                       if (widget.mode == AuthMode.register) ...[
                         Row(
                           children: [
-                            Expanded(child: _buildTextField(_firstNameController, 'First Name', AuthValidation.validateFirstName)),
+                            Expanded(
+                              child: _buildTextField(
+                                _firstNameController,
+                                'First Name',
+                                AuthValidation.validateFirstName,
+                              ),
+                            ),
                             const SizedBox(width: 12),
-                            Expanded(child: _buildTextField(_lastNameController, 'Last Name', AuthValidation.validateLastName)),
+                            Expanded(
+                              child: _buildTextField(
+                                _lastNameController,
+                                'Last Name',
+                                AuthValidation.validateLastName,
+                              ),
+                            ),
                           ],
                         ),
                         const SizedBox(height: 12),
                       ],
-                      _buildTextField(_emailController, 'Email', AuthValidation.validateEmail),
+                      _buildTextField(
+                        _emailController,
+                        'Email',
+                        AuthValidation.validateEmail,
+                      ),
                       const SizedBox(height: 12),
                       if (widget.mode == AuthMode.register) ...[
-                        _buildTextField(_phoneController, 'Phone Number', AuthValidation.validatePhone),
+                        _buildTextField(
+                          _phoneController,
+                          'Phone Number',
+                          AuthValidation.validatePhone,
+                        ),
                         const SizedBox(height: 12),
                       ],
                       TextFormField(
@@ -115,37 +142,62 @@ class _AuthFormDialogState extends State<AuthFormDialog> {
                           labelText: 'Password',
                           prefixIcon: const Icon(Icons.lock_outline_rounded),
                           suffixIcon: IconButton(
-                            onPressed: () => setState(() => _showPassword = !_showPassword),
-                            icon: Icon(_showPassword ? Icons.visibility_off : Icons.visibility),
+                            onPressed: () =>
+                                setState(() => _showPassword = !_showPassword),
+                            icon: Icon(
+                              _showPassword
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                            ),
                           ),
-                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(14)),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(14),
+                          ),
                         ),
                       ),
                       const SizedBox(height: 12),
                       if (widget.mode == AuthMode.register) ...[
-                        Row(
-                          children: [
-                            Expanded(child: _buildTextField(_cityController, 'City', AuthValidation.validateCity)),
-                            const SizedBox(width: 12),
-                            Expanded(child: _buildTextField(_postalCodeController, 'Postal Code', AuthValidation.validatePostalCode)),
-                          ],
+                        EgyptianGovernorateDropdown(
+                          controller: _cityController,
+                          validator: AuthValidation.validateCity,
                         ),
                         const SizedBox(height: 16),
                       ],
                       FilledButton.icon(
                         onPressed: state.isSubmitting ? null : _submit,
                         icon: state.isSubmitting
-                            ? const SizedBox(width: 18, height: 18, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
-                            : Icon(widget.mode == AuthMode.login ? Icons.login_rounded : Icons.person_add_alt_1_rounded),
+                            ? const SizedBox(
+                                width: 18,
+                                height: 18,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  color: Colors.white,
+                                ),
+                              )
+                            : Icon(
+                                widget.mode == AuthMode.login
+                                    ? Icons.login_rounded
+                                    : Icons.person_add_alt_1_rounded,
+                              ),
                         label: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 12),
-                          child: Text(widget.mode == AuthMode.login ? 'Sign In' : 'Create Account'),
+                          child: Text(
+                            widget.mode == AuthMode.login
+                                ? 'Sign In'
+                                : 'Create Account',
+                          ),
                         ),
                       ),
                       const SizedBox(height: 12),
                       TextButton(
-                        onPressed: state.isSubmitting ? null : () => Navigator.of(context).pop(),
-                        child: Text(widget.mode == AuthMode.login ? 'Cancel' : 'Maybe later'),
+                        onPressed: state.isSubmitting
+                            ? null
+                            : () => Navigator.of(context).pop(),
+                        child: Text(
+                          widget.mode == AuthMode.login
+                              ? 'Cancel'
+                              : 'Maybe later',
+                        ),
                       ),
                     ],
                   ),
@@ -158,7 +210,11 @@ class _AuthFormDialogState extends State<AuthFormDialog> {
     );
   }
 
-  Widget _buildTextField(TextEditingController controller, String label, String? Function(String?) validator) {
+  Widget _buildTextField(
+    TextEditingController controller,
+    String label,
+    String? Function(String?) validator,
+  ) {
     return TextFormField(
       controller: controller,
       validator: validator,
@@ -190,7 +246,6 @@ class _AuthFormDialogState extends State<AuthFormDialog> {
         phoneNumber: _phoneController.text,
         password: password,
         city: _cityController.text,
-        postalCode: _postalCodeController.text,
       );
     }
   }

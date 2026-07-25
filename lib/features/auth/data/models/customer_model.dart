@@ -8,7 +8,6 @@ class CustomerModel extends Equatable {
     required this.email,
     required this.phoneNumber,
     required this.city,
-    required this.postalCode,
   });
 
   final String? id;
@@ -17,7 +16,6 @@ class CustomerModel extends Equatable {
   final String email;
   final String phoneNumber;
   final String city;
-  final String postalCode;
 
   String get fullName => '$firstName $lastName'.trim();
 
@@ -29,7 +27,6 @@ class CustomerModel extends Equatable {
       'email': email,
       'phoneNumber': phoneNumber,
       'city': city,
-      'postalCode': postalCode,
     };
   }
 
@@ -41,7 +38,6 @@ class CustomerModel extends Equatable {
       email: (json['email'] ?? '').toString(),
       phoneNumber: (json['phoneNumber'] ?? json['phone_number'] ?? '').toString(),
       city: (json['city'] ?? '').toString(),
-      postalCode: (json['postalCode'] ?? json['postal_code'] ?? '').toString(),
     );
   }
 
@@ -52,7 +48,6 @@ class CustomerModel extends Equatable {
     String? email,
     String? phoneNumber,
     String? city,
-    String? postalCode,
   }) {
     return CustomerModel(
       id: id ?? this.id,
@@ -61,10 +56,9 @@ class CustomerModel extends Equatable {
       email: email ?? this.email,
       phoneNumber: phoneNumber ?? this.phoneNumber,
       city: city ?? this.city,
-      postalCode: postalCode ?? this.postalCode,
     );
   }
 
   @override
-  List<Object?> get props => [id, firstName, lastName, email, phoneNumber, city, postalCode];
+  List<Object?> get props => [id, firstName, lastName, email, phoneNumber, city];
 }

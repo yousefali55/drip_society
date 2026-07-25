@@ -90,7 +90,6 @@ class AuthRepository {
     required String phoneNumber,
     required String password,
     required String city,
-    required String postalCode,
   }) async {
     try {
       final response = await _dio.post(
@@ -102,7 +101,6 @@ class AuthRepository {
           'phoneNumber': phoneNumber.trim(),
           'password': password,
           'city': city.trim(),
-          'postalCode': postalCode.trim(),
         },
       );
 
@@ -118,7 +116,6 @@ class AuthRepository {
         email: email.trim(),
         phoneNumber: phoneNumber.trim(),
         city: city.trim(),
-        postalCode: postalCode.trim(),
       );
 
       if (customer == null) {
@@ -240,7 +237,6 @@ class AuthRepository {
     String? email,
     String? phoneNumber,
     String? city,
-    String? postalCode,
   }) {
     final directCustomer = payload['customer'];
     if (directCustomer is Map<String, dynamic>) {
@@ -273,7 +269,6 @@ class AuthRepository {
       email: fallbackEmail,
       phoneNumber: phoneNumber ?? payload['phoneNumber']?.toString() ?? '',
       city: city ?? payload['city']?.toString() ?? '',
-      postalCode: postalCode ?? payload['postalCode']?.toString() ?? '',
     );
   }
 }

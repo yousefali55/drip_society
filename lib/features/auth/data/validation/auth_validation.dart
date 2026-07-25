@@ -60,15 +60,7 @@ class AuthValidation {
   static String? validateCity(String? value) {
     final text = value?.trim() ?? '';
     if (text.isEmpty) {
-      return 'City is required';
-    }
-    return null;
-  }
-
-  static String? validatePostalCode(String? value) {
-    final text = value?.trim() ?? '';
-    if (text.isEmpty) {
-      return 'Postal code is required';
+      return 'Please select your governorate.';
     }
     return null;
   }

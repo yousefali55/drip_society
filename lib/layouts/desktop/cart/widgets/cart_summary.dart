@@ -9,20 +9,19 @@ class CartSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final subtotal = state.totalPrice;
-    const delivery = 0.0;
-    final total = subtotal + delivery;
+    final total = subtotal;
 
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surfaceContainerHighest.withValues(alpha: 0.25),
+        color: Theme.of(
+          context,
+        ).colorScheme.surfaceContainerHighest.withValues(alpha: 0.25),
         borderRadius: BorderRadius.circular(18),
       ),
       child: Column(
         children: [
           _summaryRow('Subtotal', '${subtotal.toStringAsFixed(0)} EGP'),
-          const SizedBox(height: 8),
-          _summaryRow('Delivery', 'Free'),
           const Divider(height: 20),
           _summaryRow('Total', '${total.toStringAsFixed(0)} EGP', isBold: true),
         ],
@@ -34,8 +33,18 @@ class CartSummary extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(label, style: TextStyle(fontWeight: isBold ? FontWeight.bold : FontWeight.w500)),
-        Text(value, style: TextStyle(fontWeight: isBold ? FontWeight.bold : FontWeight.w500)),
+        Text(
+          label,
+          style: TextStyle(
+            fontWeight: isBold ? FontWeight.bold : FontWeight.w500,
+          ),
+        ),
+        Text(
+          value,
+          style: TextStyle(
+            fontWeight: isBold ? FontWeight.bold : FontWeight.w500,
+          ),
+        ),
       ],
     );
   }

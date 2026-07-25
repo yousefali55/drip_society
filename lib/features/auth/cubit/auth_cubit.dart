@@ -75,7 +75,6 @@ class AuthCubit extends Cubit<AuthState> {
     required String phoneNumber,
     required String password,
     required String city,
-    required String postalCode,
   }) async {
     emit(
       state.copyWith(
@@ -93,7 +92,6 @@ class AuthCubit extends Cubit<AuthState> {
       phoneNumber: phoneNumber,
       password: password,
       city: city,
-      postalCode: postalCode,
     );
 
     if (result.success && result.customer != null) {
@@ -123,13 +121,9 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> logout() async {
     await _repository.logout();
     emit(
-      state.copyWith(
+      const AuthState(
         status: AuthStatus.unauthenticated,
-        customer: null,
-        token: null,
-        errorMessage: null,
         successMessage: 'Signed out successfully',
-        isSubmitting: false,
       ),
     );
   }
