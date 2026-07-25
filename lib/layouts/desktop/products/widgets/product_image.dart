@@ -27,16 +27,16 @@ class ProductImage extends StatelessWidget {
               height: double.infinity,
               fadeInDuration: const Duration(milliseconds: 300),
               fadeOutDuration: const Duration(milliseconds: 100),
-              memCacheWidth: 400,
-              memCacheHeight: 400,
-              maxWidthDiskCache: 400,
-              maxHeightDiskCache: 400,
+              memCacheWidth: 500,
+              memCacheHeight: 500,
+              maxWidthDiskCache: 500,
+              maxHeightDiskCache: 500,
               placeholder: (context, _) => Container(
                 color: placeholderColor,
                 child: const Center(
                   child: SizedBox(
-                    width: 24,
-                    height: 24,
+                    width: 30,
+                    height: 30,
                     child: CircularProgressIndicator(strokeWidth: 2),
                   ),
                 ),

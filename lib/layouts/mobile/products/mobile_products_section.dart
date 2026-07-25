@@ -5,6 +5,7 @@ import 'package:drip_society/layouts/mobile/products/widgets/mobile_products_gri
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class MobileProductsSection extends StatelessWidget {
@@ -52,14 +53,18 @@ class MobileProductsSection extends StatelessWidget {
                   ),
                 ).animate().fade(delay: 100.ms).slideY(begin: .12),
                 const SizedBox(height: 12),
-                Text(
-                  'Discover handcrafted premium coffee beans carefully roasted '
-                  'to bring unforgettable flavor in every cup.',
-                  textAlign: TextAlign.center,
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodyLarge?.copyWith(height: 1.6),
-                ).animate().fade(delay: 180.ms).slideY(begin: .12),
+              Text(
+                    'Discover handcrafted premium coffee beans carefully roasted to bring unforgettable flavor in every cup.',
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.roboto(fontSize: 20, height: 1.8),
+                  )
+                  .animate(onPlay: (c) => c.repeat(reverse: true))
+                  .scale(
+                    begin: const Offset(1, 1),
+                    end: const Offset(1.02, 1.02),
+                    duration: 2200.ms,
+                  )
+                  .fade(duration: 500.ms),
                 const SizedBox(height: 34),
                 if (isLoading)
                   const Skeletonizer(child: MobileProductsGrid(products: []))

@@ -72,7 +72,9 @@ class _ProductCardState extends State<ProductCard> {
               ),
               const SizedBox(height: 14),
               ProductPrice(price: widget.product.price),
-              const Spacer(),
+              const SizedBox(
+                height: 15,
+              ),
               AnimatedCartButton(
                 product: widget.product,
                 productId: widget.product.id,
