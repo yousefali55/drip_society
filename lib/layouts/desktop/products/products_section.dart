@@ -1,11 +1,14 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:drip_society/core/responsive/responsive_layout.dart';
 import 'package:drip_society/layouts/desktop/products/data/cubit/products_cubit.dart';
 import 'package:drip_society/layouts/desktop/products/data/product_model.dart';
 import 'package:drip_society/layouts/desktop/products/widgets/error_view.dart';
 import 'package:drip_society/layouts/desktop/products/widgets/products_grid.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:marquee/marquee.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class ProductsSection extends StatelessWidget {
@@ -40,14 +43,18 @@ class ProductsSection extends StatelessWidget {
                 style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 12),
-              ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 650),
-                child: Text(
-                  'Discover handcrafted premium coffee beans carefully roasted to bring unforgettable flavor in every cup.',
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.roboto(fontSize: 30, height: 1.8),
-                ),
-              ),
+              Text(
+                    'Discover handcrafted premium coffee beans carefully roasted to bring unforgettable flavor in every cup.',
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.roboto(fontSize: 30, height: 1.8),
+                  )
+                  .animate(onPlay: (c) => c.repeat(reverse: true))
+                  .scale(
+                    begin: const Offset(1, 1),
+                    end: const Offset(1.02, 1.02),
+                    duration: 2200.ms,
+                  )
+                  .fade(duration: 500.ms),
               const SizedBox(height: 24),
               Padding(padding: const EdgeInsets.symmetric(horizontal: 24)),
               const SizedBox(height: 32),
