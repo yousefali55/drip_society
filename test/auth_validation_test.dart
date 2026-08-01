@@ -8,7 +8,17 @@ void main() {
     });
 
     test('rejects invalid email format', () {
-      expect(AuthValidation.validateEmail('not-an-email'), 'Enter a valid email address');
+      expect(
+        AuthValidation.validateEmail('not-an-email'),
+        'Enter a valid email address',
+      );
+    });
+
+    test('returns a detailed password message when rules are missing', () {
+      expect(
+        AuthValidation.validatePassword('ABC'),
+        'Password must contain at least:\n- 6 characters\n- One lowercase letter\n- One number\n- One special character',
+      );
     });
 
     test('accepts valid email and password', () {

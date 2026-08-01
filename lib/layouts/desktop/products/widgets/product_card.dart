@@ -57,17 +57,18 @@ class _ProductCardState extends State<ProductCard> {
               ),
               const SizedBox(height: 12),
               Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 7,
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 decoration: BoxDecoration(
-                  color: colorScheme.primary.withValues(alpha: 0.10),
-                  borderRadius: BorderRadius.circular(30),
+                  color: colorScheme.primary.withValues(alpha: .1),
+                  borderRadius: BorderRadius.circular(999),
                 ),
                 child: Text(
-                  widget.product.stock > 0 ? 'In Stock' : 'Out of Stock',
-                  style: TextStyle(color: colorScheme.primary),
+                  '200g',
+                  style: TextStyle(
+                    color: colorScheme.primary,
+                    fontWeight: FontWeight.w800,
+                    fontSize: 12,
+                  ),
                 ),
               ),
               const SizedBox(height: 14),

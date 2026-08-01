@@ -1,6 +1,13 @@
 class AuthValidation {
   const AuthValidation._();
 
+  static final RegExp _uppercaseRegex = RegExp(r'[A-Z]');
+  static final RegExp _lowercaseRegex = RegExp(r'[a-z]');
+  static final RegExp _numberRegex = RegExp(r'\d');
+  static final RegExp _specialCharacterRegex = RegExp(
+    r'''[!@#$%^&*()_+\-=[\]{}|;:'",.<>?/]''',
+  );
+
   static String? validateFirstName(String? value) {
     final text = value?.trim() ?? '';
     if (text.isEmpty) {
@@ -51,9 +58,29 @@ class AuthValidation {
     if (text.isEmpty) {
       return 'Password is required';
     }
+
+    final missingRules = <String>[];
+
     if (text.length < 6) {
-      return 'Password must be at least 6 characters';
+      missingRules.add('- 6 characters');
     }
+    if (!_uppercaseRegex.hasMatch(text)) {
+      missingRules.add('- One uppercase letter');
+    }
+    if (!_lowercaseRegex.hasMatch(text)) {
+      missingRules.add('- One lowercase letter');
+    }
+    if (!_numberRegex.hasMatch(text)) {
+      missingRules.add('- One number');
+    }
+    if (!_specialCharacterRegex.hasMatch(text)) {
+      missingRules.add('- One special character');
+    }
+
+    if (missingRules.isNotEmpty) {
+      return 'Password must contain at least:\n${missingRules.join('\n')}';
+    }
+
     return null;
   }
 
