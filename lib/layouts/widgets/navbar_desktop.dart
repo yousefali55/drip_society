@@ -1,5 +1,4 @@
 import 'package:drip_society/core/theme/theme_switch.dart';
-import 'package:drip_society/features/auth/presentation/widgets/auth_menu_button.dart';
 import 'package:drip_society/layouts/desktop/cart/widgets/cart_badge.dart';
 import 'package:drip_society/layouts/desktop/cart/widgets/cart_drawer.dart';
 import 'package:drip_society/layouts/widgets/logo_app.dart';
@@ -68,7 +67,6 @@ class DesktopNavbar extends StatelessWidget {
                     const Spacer(),
                     const ThemeSwitch(),
                     const SizedBox(width: 12),
-                    const AuthMenuButton(compact: true),
                     const SizedBox(width: 12),
                     CartBadge(
                       onTap: () {
@@ -135,8 +133,6 @@ class DesktopNavbar extends StatelessWidget {
                     ),
 
                     const SizedBox(width: 25),
-
-                    const AuthMenuButton(),
                     const SizedBox(width: 12),
                   ],
                 ),

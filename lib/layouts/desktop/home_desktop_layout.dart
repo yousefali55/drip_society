@@ -1,7 +1,7 @@
+import 'package:drip_society/core/di/service_locator.dart';
 import 'package:drip_society/layouts/desktop/about_us/widgets/about_section.dart';
 import 'package:drip_society/layouts/desktop/hero/widgets/hero_section.dart';
 import 'package:drip_society/layouts/desktop/products/data/cubit/products_cubit.dart';
-import 'package:drip_society/layouts/desktop/products/data/products_repo.dart';
 import 'package:drip_society/layouts/desktop/products/products_section.dart';
 import 'package:drip_society/layouts/desktop/widgets/desktop_footer.dart';
 import 'package:drip_society/layouts/widgets/navbar_desktop.dart';
@@ -63,8 +63,7 @@ class _HomeDesktopLayoutState extends State<HomeDesktopLayout> {
             SizedBox(
               key: _productsKey,
               child: BlocProvider(
-                create: (context) =>
-                    ProductsCubit(ProductsRepository())..getProducts(),
+                create: (context) => getIt<ProductsCubit>()..getProducts(),
                 child: const ProductsSection(),
               ),
             ),

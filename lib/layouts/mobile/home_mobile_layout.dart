@@ -1,6 +1,6 @@
+import 'package:drip_society/core/di/service_locator.dart';
 import 'package:drip_society/layouts/desktop/cart/widgets/cart_drawer.dart';
 import 'package:drip_society/layouts/desktop/products/data/cubit/products_cubit.dart';
-import 'package:drip_society/layouts/desktop/products/data/products_repo.dart';
 import 'package:drip_society/layouts/desktop/widgets/desktop_footer.dart';
 import 'package:drip_society/layouts/mobile/about_us/widgets/mobile_about_section.dart';
 import 'package:drip_society/layouts/mobile/hero/widgets/mobile_hero_section.dart';
@@ -43,7 +43,7 @@ class _MobileHomeLayoutState extends State<MobileHomeLayout> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => ProductsCubit(ProductsRepository()),
+      create: (_) => getIt<ProductsCubit>()..getProducts(),
       child: Scaffold(
         drawer: MobileNavigationDrawer(
           onHome: () => _scrollTo(_homeKey),

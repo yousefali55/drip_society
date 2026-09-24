@@ -1,5 +1,5 @@
+import 'package:drip_society/core/di/service_locator.dart';
 import 'package:drip_society/layouts/desktop/products/data/cubit/products_cubit.dart';
-import 'package:drip_society/layouts/desktop/products/data/products_repo.dart';
 import 'package:drip_society/layouts/desktop/products/widgets/error_view.dart';
 import 'package:drip_society/layouts/mobile/products/widgets/mobile_products_grid.dart';
 import 'package:flutter/material.dart';
@@ -26,11 +26,11 @@ class MobileProductsSection extends StatelessWidget {
       ),
       color: Colors.transparent,
       child: BlocProvider(
-        create: (context) => ProductsCubit(ProductsRepository())..getProducts(),
+        create: (context) => getIt<ProductsCubit>()..getProducts(),
         child: BlocBuilder<ProductsCubit, ProductsState>(
           builder: (context, state) {
             final isLoading = state is ProductsLoading;
-            final isError = state is ProductsError;
+            final isError = state is ProductsFailure;
             final isSuccess = state is ProductsSuccess;
             return Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -70,7 +70,7 @@ class MobileProductsSection extends StatelessWidget {
                   const Skeletonizer(child: MobileProductsGrid(products: []))
                 else if (isError)
                   ErrorView(
-                    message: state.errorMessage,
+                    message: state.exception.message,
                     onRetry: () => context.read<ProductsCubit>().getProducts(),
                   )
                 else if (isSuccess)

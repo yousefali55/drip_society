@@ -1,6 +1,4 @@
 import 'package:drip_society/core/responsive/responsive_layout.dart';
-import 'package:drip_society/features/auth/cubit/auth_cubit.dart';
-import 'package:drip_society/features/auth/presentation/widgets/auth_form_dialog.dart';
 import 'package:drip_society/features/checkout/presentation/widgets/checkout_dialog.dart';
 import 'package:drip_society/layouts/desktop/cart/cubit/cart_item_cubit.dart';
 import 'package:drip_society/layouts/desktop/cart/cubit/cart_item_state.dart';
@@ -33,24 +31,12 @@ class _CartDrawerState extends State<CartDrawer> {
       return;
     }
 
-    final authState = context.read<AuthCubit>().state;
-
-    if (!authState.isAuthenticated || authState.customer == null) {
-      if (!mounted) return;
-
-      await showDialog<void>(
-        context: context,
-        builder: (_) => const AuthFormDialog(mode: AuthMode.login),
-      );
-      return;
-    }
-
     setState(() => _isSubmitting = true);
 
     try {
       await showDialog<void>(
         context: context,
-        builder: (_) => CheckoutDialog(customer: authState.customer!),
+        builder: (_) => const CheckoutDialog(),
       );
 
       if (!mounted) return;

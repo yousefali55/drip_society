@@ -1,5 +1,4 @@
 import 'package:drip_society/core/widgets/egyptian_governorate_dropdown.dart';
-import 'package:drip_society/features/auth/data/models/customer_model.dart';
 import 'package:drip_society/layouts/desktop/cart/cubit/cart_item_cubit.dart';
 import 'package:drip_society/layouts/desktop/cart/cubit/cart_item_state.dart';
 import 'package:flutter/material.dart';
@@ -7,9 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CheckoutDialog extends StatefulWidget {
-  const CheckoutDialog({super.key, required this.customer});
-
-  final CustomerModel customer;
+  const CheckoutDialog({super.key});
 
   @override
   State<CheckoutDialog> createState() => _CheckoutDialogState();
@@ -17,6 +14,8 @@ class CheckoutDialog extends StatefulWidget {
 
 class _CheckoutDialogState extends State<CheckoutDialog> {
   final _formKey = GlobalKey<FormState>();
+  late final TextEditingController _nameController;
+  late final TextEditingController _phoneController;
   late final TextEditingController _addressController;
   late final TextEditingController _cityController;
   bool _isSubmitting = false;
@@ -24,12 +23,16 @@ class _CheckoutDialogState extends State<CheckoutDialog> {
   @override
   void initState() {
     super.initState();
+    _nameController = TextEditingController();
+    _phoneController = TextEditingController();
     _addressController = TextEditingController(text: '23 El Gomhoria St');
-    _cityController = TextEditingController(text: widget.customer.city);
+    _cityController = TextEditingController();
   }
 
   @override
   void dispose() {
+    _nameController.dispose();
+    _phoneController.dispose();
     _addressController.dispose();
     _cityController.dispose();
     super.dispose();
@@ -185,15 +188,28 @@ class _CheckoutDialogState extends State<CheckoutDialog> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Customer',
+            'Contact Information',
             style: Theme.of(
               context,
             ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
           ),
           const SizedBox(height: 8),
-          Text(widget.customer.fullName),
-          Text(widget.customer.phoneNumber),
-          Text(widget.customer.city),
+          TextFormField(
+            controller: _nameController,
+            decoration: const InputDecoration(labelText: 'Full name'),
+            validator: (value) => value == null || value.trim().isEmpty
+                ? 'Enter your full name'
+                : null,
+          ),
+          const SizedBox(height: 12),
+          TextFormField(
+            controller: _phoneController,
+            keyboardType: TextInputType.phone,
+            decoration: const InputDecoration(labelText: 'Phone number'),
+            validator: (value) => value == null || value.trim().isEmpty
+                ? 'Enter your phone number'
+                : null,
+          ),
         ],
       ),
     );
@@ -247,9 +263,9 @@ class _CheckoutDialogState extends State<CheckoutDialog> {
       '☕ *Drip Society Order*',
       '',
       'Customer:',
-      '👤 ${widget.customer.fullName}',
+      '👤 ${_nameController.text}',
       '',
-      '📞 ${widget.customer.phoneNumber}',
+      '📞 ${_phoneController.text}',
       '',
       '📍 ${_cityController.text}',
       '',

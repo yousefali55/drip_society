@@ -21,7 +21,7 @@ class ProductsSection extends StatelessWidget {
       child: BlocBuilder<ProductsCubit, ProductsState>(
         builder: (context, state) {
           final isLoading = state is ProductsLoading;
-          final isError = state is ProductsError;
+          final isError = state is ProductsFailure;
           final isSuccess = state is ProductsSuccess;
 
           return Column(
@@ -68,7 +68,7 @@ class ProductsSection extends StatelessWidget {
                     : isError
                     ? ErrorView(
                         key: const ValueKey('error'),
-                        message: state.errorMessage,
+                        message: state.exception.message,
                         onRetry: () =>
                             context.read<ProductsCubit>().getProducts(),
                       )
@@ -122,7 +122,6 @@ const List<ProductModel> _fakeSkeletonProducts = [
     nameAr: 'Premium roast',
     description: 'Smooth handcrafted coffee with caramel notes.',
     price: 120,
-    stock: 10,
     imageUrl: '',
     isFeatured: true,
   ),
@@ -132,7 +131,6 @@ const List<ProductModel> _fakeSkeletonProducts = [
     nameAr: 'Premium roast',
     description: 'Smooth handcrafted coffee with chocolate notes.',
     price: 135,
-    stock: 10,
     imageUrl: '',
     isFeatured: true,
   ),
@@ -142,7 +140,6 @@ const List<ProductModel> _fakeSkeletonProducts = [
     nameAr: 'Premium roast',
     description: 'Smooth handcrafted coffee with citrus notes.',
     price: 150,
-    stock: 10,
     imageUrl: '',
     isFeatured: true,
   ),
@@ -152,7 +149,6 @@ const List<ProductModel> _fakeSkeletonProducts = [
     nameAr: 'Premium roast',
     description: 'Smooth handcrafted coffee with nutty notes.',
     price: 115,
-    stock: 10,
     imageUrl: '',
     isFeatured: true,
   ),
@@ -162,7 +158,6 @@ const List<ProductModel> _fakeSkeletonProducts = [
     nameAr: 'Premium roast',
     description: 'Smooth handcrafted coffee with vanilla notes.',
     price: 145,
-    stock: 10,
     imageUrl: '',
     isFeatured: true,
   ),
@@ -172,7 +167,6 @@ const List<ProductModel> _fakeSkeletonProducts = [
     nameAr: 'Premium roast',
     description: 'Smooth handcrafted coffee with bold notes.',
     price: 160,
-    stock: 10,
     imageUrl: '',
     isFeatured: true,
   ),

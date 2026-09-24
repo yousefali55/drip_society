@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ContactSection extends StatelessWidget {
   const ContactSection({
@@ -59,15 +60,26 @@ class ContactSection extends StatelessWidget {
               'Order your favorite Drip Society roast and enjoy a premium '
               'coffee ritual at home.',
               textAlign: isArabic ? TextAlign.right : TextAlign.left,
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(height: 1.7),
+              style: Theme.of(
+                context,
+              ).textTheme.bodyLarge?.copyWith(height: 1.7),
             ),
             const SizedBox(height: 24),
             SizedBox(
               width: double.infinity,
               child: Align(
-                alignment: isArabic ? Alignment.centerRight : Alignment.centerLeft,
+                alignment: isArabic
+                    ? Alignment.centerRight
+                    : Alignment.centerLeft,
                 child: FilledButton(
-                  onPressed: () => _showContactSnackBar(context),
+                  onPressed: () async {
+                    final url = Uri.parse(
+                      'https://www.facebook.com/dripsociety.eg',
+                    );
+                    if (await canLaunchUrl(url)) {
+                      await launchUrl(url);
+                    }
+                  },
                   child: const Padding(
                     padding: EdgeInsets.symmetric(vertical: 16),
                     child: Text('Contact Us'),
@@ -89,10 +101,10 @@ class ContactSection extends StatelessWidget {
       );
     }
 
-    return SizedBox(width: double.infinity, child: content)
-        .animate()
-        .fade(duration: 500.ms)
-        .slideY(begin: .12);
+    return SizedBox(
+      width: double.infinity,
+      child: content,
+    ).animate().fade(duration: 500.ms).slideY(begin: .12);
   }
 
   void _showContactSnackBar(BuildContext context) {

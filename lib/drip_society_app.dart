@@ -1,6 +1,5 @@
 import 'package:drip_society/core/theme/app_theme.dart';
 import 'package:drip_society/core/theme/cubit/theme_changer_cubit.dart';
-import 'package:drip_society/features/auth/cubit/auth_cubit.dart';
 import 'package:drip_society/layouts/desktop/cart/cubit/cart_item_cubit.dart';
 import 'package:drip_society/layouts/home_screen.dart';
 import 'package:flutter/material.dart';
@@ -14,9 +13,7 @@ class DripSocietyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => ThemeCubit()),
-        BlocProvider(create: (_) => CartCubit()),
-        BlocProvider(create: (_) => AuthCubit()),
-      ],
+        BlocProvider(create: (_) => CartCubit()),      ],
       child: BlocBuilder<ThemeCubit, ThemeMode>(
         builder: (context, themeMode) {
           return MaterialApp(

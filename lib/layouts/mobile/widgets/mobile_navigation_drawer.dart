@@ -1,5 +1,4 @@
 import 'package:drip_society/core/theme/theme_switch.dart';
-import 'package:drip_society/features/auth/presentation/widgets/auth_menu_button.dart';
 import 'package:drip_society/layouts/widgets/logo_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -59,7 +58,6 @@ class MobileNavigationDrawer extends StatelessWidget {
                 onTap: () => _navigate(context, onContact),
               ),
               const SizedBox(height: 28),
-              const AuthMenuButton(compact: true),
               const SizedBox(height: 16),
               Divider(color: Theme.of(context).dividerColor),
               const SizedBox(height: 18),
