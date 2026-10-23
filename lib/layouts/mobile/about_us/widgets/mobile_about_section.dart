@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MobileAboutSection extends StatelessWidget {
   const MobileAboutSection({
@@ -93,7 +94,14 @@ class MobileAboutSection extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: FilledButton(
-                  onPressed: () {},
+                  onPressed: () async{
+                    final url = Uri.parse(
+                      'https://www.facebook.com/dripsociety.eg',
+                    );
+                    if(await canLaunchUrl(url)){
+                      await launchUrl(url);
+                    }
+                  },
                   child: const Padding(
                     padding: EdgeInsets.symmetric(vertical: 16),
                     child: Text('Discover More'),

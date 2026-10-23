@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AboutSection extends StatelessWidget {
   const AboutSection({super.key});
@@ -37,11 +38,7 @@ class AboutSection extends StatelessWidget {
               if (isNarrow) {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    image,
-                    const SizedBox(height: 42),
-                    copy,
-                  ],
+                  children: [image, const SizedBox(height: 42), copy],
                 );
               }
 
@@ -81,10 +78,11 @@ class _AboutCopy extends StatelessWidget {
         const SizedBox(height: 18),
         Text(
           'Brewing Experiences,\nNot Just Coffee.',
-          style: (isNarrow
-                  ? Theme.of(context).textTheme.headlineMedium
-                  : Theme.of(context).textTheme.displaySmall)
-              ?.copyWith(fontWeight: FontWeight.bold, height: 1.15),
+          style:
+              (isNarrow
+                      ? Theme.of(context).textTheme.headlineMedium
+                      : Theme.of(context).textTheme.displaySmall)
+                  ?.copyWith(fontWeight: FontWeight.bold, height: 1.15),
         ).animate().fade(delay: 220.ms).slideY(begin: .12),
         const SizedBox(height: 24),
         Text(
@@ -108,7 +106,12 @@ class _AboutCopy extends StatelessWidget {
         ).animate().fade(delay: 620.ms).slideY(begin: .12),
         const SizedBox(height: 36),
         FilledButton(
-          onPressed: () {},
+          onPressed: () async {
+            final url = Uri.parse('https://www.facebook.com/dripsociety.eg');
+            if (await canLaunchUrl(url)) {
+              await launchUrl(url);
+            }
+          },
           child: const Padding(
             padding: EdgeInsets.symmetric(horizontal: 25, vertical: 18),
             child: Text('Discover More'),

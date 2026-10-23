@@ -1,12 +1,12 @@
 import 'package:drip_society/core/responsive/responsive_layout.dart';
 import 'package:drip_society/layouts/desktop/products/data/cubit/products_cubit.dart';
 import 'package:drip_society/layouts/desktop/products/data/product_model.dart';
+import 'package:drip_society/layouts/desktop/products/data/products_skeleton_data.dart';
 import 'package:drip_society/layouts/desktop/products/widgets/error_view.dart';
 import 'package:drip_society/layouts/desktop/products/widgets/products_grid.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class ProductsSection extends StatelessWidget {
@@ -44,7 +44,7 @@ class ProductsSection extends StatelessWidget {
               Text(
                     'Discover handcrafted premium coffee beans carefully roasted to bring unforgettable flavor in every cup.',
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.roboto(fontSize: 30, height: 1.8),
+                    style: const TextStyle(fontSize: 30, height: 1.8),
                   )
                   .animate(onPlay: (c) => c.repeat(reverse: true))
                   .scale(
@@ -72,6 +72,8 @@ class ProductsSection extends StatelessWidget {
                         onRetry: () =>
                             context.read<ProductsCubit>().getProducts(),
                       )
+                    : isSuccess && state.products.isEmpty
+                    ? const _EmptyProductsView(key: ValueKey('no-products'))
                     : isSuccess
                     ? _ProductsGridContent(
                         key: const ValueKey('products'),
@@ -95,7 +97,7 @@ class _ProductsSkeletonGrid extends StatelessWidget {
     return Skeletonizer(
       enabled: true,
       child: IgnorePointer(
-        child: _ProductsGridContent(products: _fakeSkeletonProducts),
+        child: _ProductsGridContent(products: productsSkeletonData),
       ),
     );
   }
@@ -115,59 +117,16 @@ class _ProductsGridContent extends StatelessWidget {
   }
 }
 
-const List<ProductModel> _fakeSkeletonProducts = [
-  ProductModel(
-    id: 'skeleton-product-1',
-    nameEn: 'Brazilian Coffee Beans',
-    nameAr: 'Premium roast',
-    description: 'Smooth handcrafted coffee with caramel notes.',
-    price: 120,
-    imageUrl: '',
-    isFeatured: true,
-  ),
-  ProductModel(
-    id: 'skeleton-product-2',
-    nameEn: 'Colombian Dark Roast',
-    nameAr: 'Premium roast',
-    description: 'Smooth handcrafted coffee with chocolate notes.',
-    price: 135,
-    imageUrl: '',
-    isFeatured: true,
-  ),
-  ProductModel(
-    id: 'skeleton-product-3',
-    nameEn: 'Ethiopian Espresso',
-    nameAr: 'Premium roast',
-    description: 'Smooth handcrafted coffee with citrus notes.',
-    price: 150,
-    imageUrl: '',
-    isFeatured: true,
-  ),
-  ProductModel(
-    id: 'skeleton-product-4',
-    nameEn: 'House Blend Coffee',
-    nameAr: 'Premium roast',
-    description: 'Smooth handcrafted coffee with nutty notes.',
-    price: 115,
-    imageUrl: '',
-    isFeatured: true,
-  ),
-  ProductModel(
-    id: 'skeleton-product-5',
-    nameEn: 'French Vanilla Beans',
-    nameAr: 'Premium roast',
-    description: 'Smooth handcrafted coffee with vanilla notes.',
-    price: 145,
-    imageUrl: '',
-    isFeatured: true,
-  ),
-  ProductModel(
-    id: 'skeleton-product-6',
-    nameEn: 'Signature Cold Brew',
-    nameAr: 'Premium roast',
-    description: 'Smooth handcrafted coffee with bold notes.',
-    price: 160,
-    imageUrl: '',
-    isFeatured: true,
-  ),
-];
+class _EmptyProductsView extends StatelessWidget {
+  const _EmptyProductsView({super.key});
+
+  @override
+  Widget build(BuildContext context) => Padding(
+    padding: const EdgeInsets.all(24),
+    child: Text(
+      'No products are available right now.',
+      style: Theme.of(context).textTheme.bodyLarge,
+      textAlign: TextAlign.center,
+    ),
+  );
+}

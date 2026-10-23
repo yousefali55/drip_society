@@ -18,6 +18,15 @@ class ProductsCubit extends Cubit<ProductsState> {
       emit(ProductsSuccess(products: products));
     } on AppException catch (exception) {
       emit(ProductsFailure(exception: exception));
+    } catch (_) {
+      emit(
+        ProductsFailure(
+          exception: const AppException(
+            errorType: AppErrorType.unknown,
+            message: 'Unable to load products. Please try again.',
+          ),
+        ),
+      );
     }
   }
 }

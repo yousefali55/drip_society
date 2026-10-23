@@ -82,7 +82,7 @@ class ContactSection extends StatelessWidget {
                   },
                   child: const Padding(
                     padding: EdgeInsets.symmetric(vertical: 16),
-                    child: Text('Contact Us'),
+                    child: Text('Contact Us in facebook'),
                   ),
                 ),
               ),

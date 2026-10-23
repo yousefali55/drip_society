@@ -7,6 +7,7 @@ class AppTheme {
   static final ThemeData lightTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.light,
+    fontFamily: 'Cairo',
 
     scaffoldBackgroundColor: AppColors.lightBackground,
 
@@ -67,6 +68,7 @@ class AppTheme {
   static final ThemeData darkTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.dark,
+    fontFamily: 'Cairo',
 
     scaffoldBackgroundColor: AppColors.darkBackground,
 
