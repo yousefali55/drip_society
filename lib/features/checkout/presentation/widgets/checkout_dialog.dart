@@ -4,6 +4,7 @@ import 'package:drip_society/layouts/desktop/cart/cubit/cart_item_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:drip_society/l10n/generated/app_localizations.dart';
 
 class CheckoutDialog extends StatefulWidget {
   const CheckoutDialog({super.key});
@@ -25,7 +26,7 @@ class _CheckoutDialogState extends State<CheckoutDialog> {
     super.initState();
     _nameController = TextEditingController();
     _phoneController = TextEditingController();
-    _addressController = TextEditingController(text: '23 El Gomhoria St');
+    _addressController = TextEditingController();
     _cityController = TextEditingController();
   }
 
@@ -40,6 +41,7 @@ class _CheckoutDialogState extends State<CheckoutDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Dialog(
       insetPadding: const EdgeInsets.all(16),
       child: ConstrainedBox(
@@ -59,13 +61,14 @@ class _CheckoutDialogState extends State<CheckoutDialog> {
                       children: [
                         Expanded(
                           child: Text(
-                            'Checkout',
+                            l10n.checkout,
                             style: Theme.of(context).textTheme.headlineSmall
                                 ?.copyWith(fontWeight: FontWeight.w700),
                           ),
                         ),
                         IconButton(
                           onPressed: () => Navigator.of(context).pop(),
+                          tooltip: l10n.close,
                           icon: const Icon(Icons.close_rounded),
                         ),
                       ],
@@ -78,7 +81,7 @@ class _CheckoutDialogState extends State<CheckoutDialog> {
                           children: [
                             _infoCard(context),
                             const SizedBox(height: 16),
-                            _buildSectionTitle('Delivery Information'),
+                            _buildSectionTitle(l10n.deliveryInformation),
                             const SizedBox(height: 8),
                             EgyptianGovernorateDropdown(
                               controller: _cityController,
@@ -87,13 +90,13 @@ class _CheckoutDialogState extends State<CheckoutDialog> {
                             TextField(
                               controller: _addressController,
                               maxLines: 2,
-                              decoration: const InputDecoration(
-                                labelText: 'Address',
+                              decoration: InputDecoration(
+                                labelText: l10n.address,
                                 border: OutlineInputBorder(),
                               ),
                             ),
                             const SizedBox(height: 20),
-                            _buildSectionTitle('Order Summary'),
+                            _buildSectionTitle(l10n.orderSummary),
                             const SizedBox(height: 8),
                             ...state.items.map(
                               (item) => Padding(
@@ -104,11 +107,11 @@ class _CheckoutDialogState extends State<CheckoutDialog> {
                                   children: [
                                     Expanded(
                                       child: Text(
-                                        '${item.product.nameEn} ×${item.quantity}',
+                                        '${Localizations.localeOf(context).languageCode == 'ar' && item.product.nameAr.trim().isNotEmpty ? item.product.nameAr : item.product.nameEn} ×${item.quantity}',
                                       ),
                                     ),
                                     Text(
-                                      '${(item.product.price * item.quantity).toStringAsFixed(0)} EGP',
+                                      '${(item.product.price * item.quantity).toStringAsFixed(0)} ${l10n.currencyEgp}',
                                     ),
                                   ],
                                 ),
@@ -119,17 +122,19 @@ class _CheckoutDialogState extends State<CheckoutDialog> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text('Subtotal'),
-                                Text('${subtotal.toStringAsFixed(0)} EGP'),
+                                Text(l10n.subtotal),
+                                Text(
+                                  '${subtotal.toStringAsFixed(0)} ${l10n.currencyEgp}',
+                                ),
                               ],
                             ),
                             const SizedBox(height: 6),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text('Total'),
+                                Text(l10n.total),
                                 Text(
-                                  '${total.toStringAsFixed(0)} EGP',
+                                  '${total.toStringAsFixed(0)} ${l10n.currencyEgp}',
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                               ],
@@ -159,8 +164,8 @@ class _CheckoutDialogState extends State<CheckoutDialog> {
                           padding: const EdgeInsets.symmetric(vertical: 12),
                           child: Text(
                             _isSubmitting
-                                ? 'Opening WhatsApp...'
-                                : 'Confirm Order',
+                                ? l10n.openingWhatsApp
+                                : l10n.confirmOrder,
                           ),
                         ),
                       ),
@@ -176,6 +181,7 @@ class _CheckoutDialogState extends State<CheckoutDialog> {
   }
 
   Widget _infoCard(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -188,7 +194,7 @@ class _CheckoutDialogState extends State<CheckoutDialog> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Contact Information',
+            l10n.contactInformation,
             style: Theme.of(
               context,
             ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w700),
@@ -196,18 +202,18 @@ class _CheckoutDialogState extends State<CheckoutDialog> {
           const SizedBox(height: 8),
           TextFormField(
             controller: _nameController,
-            decoration: const InputDecoration(labelText: 'Full name'),
+            decoration: InputDecoration(labelText: l10n.fullName),
             validator: (value) => value == null || value.trim().isEmpty
-                ? 'Enter your full name'
+                ? l10n.enterFullName
                 : null,
           ),
           const SizedBox(height: 12),
           TextFormField(
             controller: _phoneController,
             keyboardType: TextInputType.phone,
-            decoration: const InputDecoration(labelText: 'Phone number'),
+            decoration: InputDecoration(labelText: l10n.phoneNumber),
             validator: (value) => value == null || value.trim().isEmpty
-                ? 'Enter your phone number'
+                ? l10n.enterPhoneNumber
                 : null,
           ),
         ],
@@ -220,10 +226,11 @@ class _CheckoutDialogState extends State<CheckoutDialog> {
   }
 
   Future<void> _confirmOrder(BuildContext context, CartState state) async {
+    final l10n = AppLocalizations.of(context)!;
     if (state.items.isEmpty) {
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(const SnackBar(content: Text('Your cart is empty')));
+      ).showSnackBar(SnackBar(content: Text(l10n.emptyCartMessage)));
       return;
     }
     if (!_formKey.currentState!.validate()) return;
@@ -234,57 +241,68 @@ class _CheckoutDialogState extends State<CheckoutDialog> {
     final encodedMessage = Uri.encodeComponent(message);
     final phone = '01281966367'.replaceFirst(RegExp(r'^0'), '20');
     final uri = Uri.parse('https://wa.me/$phone?text=$encodedMessage');
+    final cartCubit = context.read<CartCubit>();
     final navigator = Navigator.of(context);
     final messenger = ScaffoldMessenger.of(context);
 
     try {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-      await context.read<CartCubit>().clear();
+      final launched = await launchUrl(
+        uri,
+        mode: LaunchMode.externalApplication,
+      );
+      if (!launched) {
+        messenger.showSnackBar(SnackBar(content: Text(l10n.whatsappUnable)));
+        return;
+      }
+      await cartCubit.clear();
       if (!mounted) return;
       navigator.pop();
-      messenger.showSnackBar(
-        const SnackBar(content: Text('WhatsApp opened with your order')),
-      );
+      messenger.showSnackBar(SnackBar(content: Text(l10n.whatsappOpened)));
     } catch (_) {
       if (!mounted) return;
-      messenger.showSnackBar(
-        const SnackBar(content: Text('Unable to open WhatsApp right now')),
-      );
+      messenger.showSnackBar(SnackBar(content: Text(l10n.whatsappUnable)));
     } finally {
       if (mounted) setState(() => _isSubmitting = false);
     }
   }
 
   String _buildMessage(CartState state) {
+    final l10n = AppLocalizations.of(context)!;
+    final isArabic = Localizations.localeOf(context).languageCode == 'ar';
     final subtotal = state.totalPrice;
     final total = subtotal;
     final lines = <String>[
       '--------------------------------',
       '☕ *Drip Society Order*',
       '',
-      'Customer:',
+      '${l10n.orderCustomer}:',
       '👤 ${_nameController.text}',
       '',
       '📞 ${_phoneController.text}',
       '',
-      '📍 ${_cityController.text}',
+      '📍 ${EgyptianGovernorateDropdown.localizedName(l10n, _cityController.text)}',
       '',
-      '🏠 Address:',
+      '🏠 ${l10n.orderAddress}:',
       _addressController.text,
       '--------------------------',
-      'Order',
+      l10n.orderItems,
       '',
-      ...state.items.map(
-        (item) =>
-            '• ${item.product.nameEn}\n${item.product.description} ${item.product.price.toStringAsFixed(0)} EGP ×${item.quantity}\n${(item.product.price * item.quantity).toStringAsFixed(0)} EGP',
-      ),
+      ...state.items.map((item) {
+        final productName = isArabic && item.product.nameAr.trim().isNotEmpty
+            ? item.product.nameAr
+            : item.product.nameEn;
+        final productDetails = isArabic || item.product.description.isEmpty
+            ? ''
+            : '\n${item.product.description}';
+        return '• $productName$productDetails ${item.product.price.toStringAsFixed(0)} ${l10n.currencyEgp} ×${item.quantity}\n${(item.product.price * item.quantity).toStringAsFixed(0)} ${l10n.currencyEgp}';
+      }),
       '',
       '--------------------------',
-      'Total',
+      l10n.total,
       '',
-      '${total.toStringAsFixed(0)} EGP',
+      '${total.toStringAsFixed(0)} ${l10n.currencyEgp}',
       '',
-      'Thank you ❤️',
+      '${l10n.thankYou} ❤️',
       '--------------------------------',
     ];
     return lines.join('\n');

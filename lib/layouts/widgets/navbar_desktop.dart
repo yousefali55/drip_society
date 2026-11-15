@@ -2,6 +2,8 @@ import 'package:drip_society/core/theme/theme_switch.dart';
 import 'package:drip_society/layouts/desktop/cart/widgets/cart_badge.dart';
 import 'package:drip_society/layouts/desktop/cart/widgets/cart_drawer.dart';
 import 'package:drip_society/layouts/widgets/logo_app.dart';
+import 'package:drip_society/core/widgets/language_switch_button.dart';
+import 'package:drip_society/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class DesktopNavbar extends StatelessWidget {
@@ -20,122 +22,133 @@ class DesktopNavbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final isArabic = Localizations.localeOf(context).languageCode == 'ar';
     return LayoutBuilder(
       builder: (context, constraints) {
-        final compact = constraints.maxWidth < 1000;
+        final compact = constraints.maxWidth < 1200;
+        final cart = CartBadge(
+          onTap: () {
+            showModalBottomSheet<void>(
+              context: context,
+              isScrollControlled: true,
+              builder: (_) => const CartDrawer(),
+            );
+          },
+        );
+        final language = const LanguageSwitchButton();
+        final theme = const ThemeSwitch();
+        final home = IconButton.filledTonal(
+          onPressed: onHomeTap,
+          tooltip: l10n.navHome,
+          icon: const Icon(Icons.home_rounded),
+        );
+        final menu = PopupMenuButton<_NavTarget>(
+          tooltip: l10n.navNavigation,
+          icon: const Icon(Icons.menu_rounded),
+          onSelected: (target) {
+            switch (target) {
+              case _NavTarget.about:
+                onAboutTap();
+              case _NavTarget.products:
+                onProductsTap();
+              case _NavTarget.contact:
+                onContactTap();
+            }
+          },
+          itemBuilder: (context) => [
+            PopupMenuItem(
+              value: _NavTarget.about,
+              child: Text(l10n.navAboutUs),
+            ),
+            PopupMenuItem(
+              value: _NavTarget.products,
+              child: Text(l10n.navProducts),
+            ),
+            PopupMenuItem(
+              value: _NavTarget.contact,
+              child: Text(l10n.navContact),
+            ),
+          ],
+        );
+        final links = compact
+            ? <Widget>[menu, const SizedBox(width: 10), home]
+            : <Widget>[
+                _NavItem(title: l10n.navHome, onTap: onHomeTap),
+                const SizedBox(width: 40),
+                _NavItem(title: l10n.navAboutUs, onTap: onAboutTap),
+                const SizedBox(width: 40),
+                _NavItem(title: l10n.navProducts, onTap: onProductsTap),
+                const SizedBox(width: 40),
+                _NavItem(title: l10n.navContact, onTap: onContactTap),
+              ];
+        final orderButton = ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Theme.of(context).colorScheme.primary,
+            foregroundColor: Theme.of(context).colorScheme.onPrimary,
+            elevation: 0,
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(14),
+            ),
+          ),
+          onPressed: onProductsTap,
+          child: Text(l10n.orderNow),
+        );
+        final children = compact
+            ? isArabic
+                  ? <Widget>[
+                      cart,
+                      const SizedBox(width: 12),
+                      language,
+                      const SizedBox(width: 12),
+                      theme,
+                      const SizedBox(width: 12),
+                      ...links,
+                      const Spacer(),
+                      orderButton,
+                    ]
+                  : <Widget>[
+                      home,
+                      const SizedBox(width: 10),
+                      menu,
+                      const Spacer(),
+                      theme,
+                      const SizedBox(width: 12),
+                      cart,
+                      const SizedBox(width: 12),
+                      language,
+                      const SizedBox(width: 12),
+                      orderButton,
+                    ]
+            : isArabic
+            ? <Widget>[
+                cart,
+                const SizedBox(width: 20),
+                language,
+                const SizedBox(width: 20),
+                theme,
+                const SizedBox(width: 50),
+                ...links,
+                const Spacer(),
+                const LogoApp(),
+              ]
+            : <Widget>[
+                const LogoApp(),
+                const Spacer(),
+                ...links,
+                const SizedBox(width: 50),
+                theme,
+                const SizedBox(width: 20),
+                cart,
+                const SizedBox(width: 12),
+                language,
+              ];
 
         return Container(
           height: 90,
           padding: EdgeInsets.symmetric(horizontal: compact ? 24 : 80),
-          child: compact
-              ? Row(
-                  children: [
-                    IconButton.filledTonal(
-                      onPressed: onHomeTap,
-                      tooltip: 'Home',
-                      icon: const Icon(Icons.home_rounded),
-                    ),
-                    const SizedBox(width: 10),
-                    PopupMenuButton<_NavTarget>(
-                      tooltip: 'Navigation',
-                      icon: const Icon(Icons.menu_rounded),
-                      onSelected: (target) {
-                        switch (target) {
-                          case _NavTarget.about:
-                            onAboutTap();
-                          case _NavTarget.products:
-                            onProductsTap();
-                          case _NavTarget.contact:
-                            onContactTap();
-                        }
-                      },
-                      itemBuilder: (context) => const [
-                        PopupMenuItem(
-                          value: _NavTarget.about,
-                          child: Text('About Us'),
-                        ),
-                        PopupMenuItem(
-                          value: _NavTarget.products,
-                          child: Text('Products'),
-                        ),
-                        PopupMenuItem(
-                          value: _NavTarget.contact,
-                          child: Text('Contact'),
-                        ),
-                      ],
-                    ),
-                    const Spacer(),
-                    const ThemeSwitch(),
-                    const SizedBox(width: 12),
-                    const SizedBox(width: 12),
-                    CartBadge(
-                      onTap: () {
-                        showModalBottomSheet<void>(
-                          context: context,
-                          isScrollControlled: true,
-                          builder: (_) => const CartDrawer(),
-                        );
-                      },
-                    ),
-                    const SizedBox(width: 12),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Theme.of(context).colorScheme.primary,
-                        foregroundColor: Theme.of(
-                          context,
-                        ).colorScheme.onPrimary,
-                        elevation: 0,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 14,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(14),
-                        ),
-                      ),
-                      onPressed: onProductsTap,
-                      child: const Text("Order Now"),
-                    ),
-                  ],
-                )
-              : Row(
-                  children: [
-                    const LogoApp(),
-
-                    const Spacer(),
-
-                    _NavItem(title: "Home", onTap: onHomeTap),
-                    const SizedBox(width: 40),
-
-                    _NavItem(title: "About Us", onTap: onAboutTap),
-                    const SizedBox(width: 40),
-
-                    _NavItem(title: "Products", onTap: onProductsTap),
-                    const SizedBox(width: 40),
-
-                    _NavItem(title: "Contact", onTap: onContactTap),
-
-                    const SizedBox(width: 50),
-
-                    /// Theme
-                    const ThemeSwitch(),
-
-                    const SizedBox(width: 20),
-
-                    CartBadge(
-                      onTap: () {
-                        showModalBottomSheet<void>(
-                          context: context,
-                          isScrollControlled: true,
-                          builder: (_) => const CartDrawer(),
-                        );
-                      },
-                    ),
-
-                    const SizedBox(width: 25),
-                    const SizedBox(width: 12),
-                  ],
-                ),
+          child: Row(children: children),
         );
       },
     );

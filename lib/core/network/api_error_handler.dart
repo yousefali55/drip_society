@@ -1,6 +1,14 @@
 import 'package:dio/dio.dart';
 
-enum AppErrorType { network, timeout, notFound, validation, server, unknown }
+enum AppErrorType {
+  network,
+  timeout,
+  notFound,
+  validation,
+  server,
+  cancelled,
+  unknown,
+}
 
 class AppException implements Exception {
   final AppErrorType errorType;
@@ -31,7 +39,7 @@ class ApiErrorHandler {
         return _handleBadResponse(exception);
       case DioExceptionType.cancel:
         return const AppException(
-          errorType: AppErrorType.unknown,
+          errorType: AppErrorType.cancelled,
           message: 'Request was cancelled.',
         );
       case DioExceptionType.badCertificate:

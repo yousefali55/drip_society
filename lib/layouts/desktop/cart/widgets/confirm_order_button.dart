@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:drip_society/l10n/generated/app_localizations.dart';
 
 class ConfirmOrderButton extends StatelessWidget {
   const ConfirmOrderButton({
@@ -34,7 +35,11 @@ class ConfirmOrderButton extends StatelessWidget {
                 ),
               )
             : const Icon(Icons.check_circle_outline),
-        label: Text(isLoading ? 'Sending...' : 'Confirm Order'),
+        label: Text(
+          isLoading
+              ? AppLocalizations.of(context)!.sending
+              : AppLocalizations.of(context)!.confirmOrder,
+        ),
       ),
     );
   }

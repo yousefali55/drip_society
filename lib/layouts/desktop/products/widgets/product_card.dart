@@ -4,6 +4,7 @@ import 'package:drip_society/layouts/desktop/products/widgets/product_image.dart
 import 'package:drip_society/layouts/desktop/products/widgets/product_price.dart';
 import 'package:drip_society/layouts/desktop/products/widgets/product_title.dart';
 import 'package:flutter/material.dart';
+import 'package:drip_society/l10n/generated/app_localizations.dart';
 
 class ProductCard extends StatefulWidget {
   const ProductCard({super.key, required this.product});
@@ -57,13 +58,16 @@ class _ProductCardState extends State<ProductCard> {
               ),
               const SizedBox(height: 12),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 6,
+                ),
                 decoration: BoxDecoration(
                   color: colorScheme.primary.withValues(alpha: .1),
                   borderRadius: BorderRadius.circular(999),
                 ),
                 child: Text(
-                  '200g',
+                  AppLocalizations.of(context)!.grams200,
                   style: TextStyle(
                     color: colorScheme.primary,
                     fontWeight: FontWeight.w800,
@@ -73,9 +77,7 @@ class _ProductCardState extends State<ProductCard> {
               ),
               const SizedBox(height: 14),
               ProductPrice(price: widget.product.price),
-              const SizedBox(
-                height: 15,
-              ),
+              const SizedBox(height: 15),
               AnimatedCartButton(
                 product: widget.product,
                 productId: widget.product.id,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:drip_society/l10n/generated/app_localizations.dart';
 
 class MobileAboutSection extends StatelessWidget {
   const MobileAboutSection({
@@ -19,11 +20,14 @@ class MobileAboutSection extends StatelessWidget {
     final width = MediaQuery.sizeOf(context).width;
     final horizontalPadding = (width * .07).clamp(20.0, 30.0).toDouble();
     final isArabic = Localizations.localeOf(context).languageCode == 'ar';
+    final l10n = AppLocalizations.of(context)!;
     final textDirection = isArabic ? TextDirection.rtl : TextDirection.ltr;
     final crossAxisAlignment = isArabic
         ? CrossAxisAlignment.end
         : CrossAxisAlignment.start;
-    final imageHeight = compact ? 180.0 : (width * .82).clamp(230.0, 360.0).toDouble();
+    final imageHeight = compact
+        ? 180.0
+        : (width * .82).clamp(230.0, 360.0).toDouble();
     final topPadding = compact ? 24.0 : 70.0;
     final bottomPadding = compact ? 24.0 : 76.0;
 
@@ -51,7 +55,7 @@ class MobileAboutSection extends StatelessWidget {
               ).animate().fade(duration: 650.ms).slideY(begin: .12),
             if (showImage) const SizedBox(height: 32),
             Text(
-              'ABOUT US',
+              l10n.aboutEyebrow,
               textAlign: isArabic ? TextAlign.right : TextAlign.left,
               style: TextStyle(
                 color: Theme.of(context).colorScheme.primary,
@@ -61,7 +65,7 @@ class MobileAboutSection extends StatelessWidget {
             ).animate().fade(delay: 120.ms).slideY(begin: .12),
             const SizedBox(height: 18),
             Text(
-              'Brewing Experiences,\nNot Just Coffee.',
+              l10n.aboutHeadline,
               textAlign: isArabic ? TextAlign.right : TextAlign.left,
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                 fontWeight: FontWeight.bold,
@@ -70,44 +74,46 @@ class MobileAboutSection extends StatelessWidget {
             ).animate().fade(delay: 220.ms).slideY(begin: .12),
             const SizedBox(height: 24),
             Text(
-              "At Drip Society, we don't simply serve coffee. "
-              'We create an experience that inspires focus, creativity, '
-              'and meaningful conversations. Every cup is crafted with '
-              'care using premium beans and exceptional brewing techniques.',
+              l10n.aboutDescription,
               textAlign: isArabic ? TextAlign.right : TextAlign.left,
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(height: 1.8),
+              style: Theme.of(
+                context,
+              ).textTheme.bodyLarge?.copyWith(height: 1.8),
             ).animate().fade(delay: 320.ms).slideY(begin: .12),
             const SizedBox(height: 28),
-            const _Feature(
-              'Premium Coffee Beans',
+            _Feature(
+              l10n.featurePremiumBeans,
             ).animate().fade(delay: 420.ms).slideY(begin: .12),
             const SizedBox(height: 14),
-            const _Feature(
-              'Expert Coffee',
+            _Feature(
+              l10n.featureExpertCoffee,
             ).animate().fade(delay: 520.ms).slideY(begin: .12),
             const SizedBox(height: 14),
-            const _Feature(
-              'Freshly Brewed Everyday',
+            _Feature(
+              l10n.featureFreshDaily,
             ).animate().fade(delay: 620.ms).slideY(begin: .12),
             if (showActionButton) ...[
               const SizedBox(height: 28),
               SizedBox(
-                width: double.infinity,
-                child: FilledButton(
-                  onPressed: () async{
-                    final url = Uri.parse(
-                      'https://www.facebook.com/dripsociety.eg',
-                    );
-                    if(await canLaunchUrl(url)){
-                      await launchUrl(url);
-                    }
-                  },
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 16),
-                    child: Text('Discover More'),
-                  ),
-                ),
-              ).animate().fade(delay: 720.ms).scale(begin: const Offset(.96, .96)),
+                    width: double.infinity,
+                    child: FilledButton(
+                      onPressed: () async {
+                        final url = Uri.parse(
+                          'https://www.facebook.com/dripsociety.eg',
+                        );
+                        if (await canLaunchUrl(url)) {
+                          await launchUrl(url);
+                        }
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: 16),
+                        child: Text(l10n.discoverMore),
+                      ),
+                    ),
+                  )
+                  .animate()
+                  .fade(delay: 720.ms)
+                  .scale(begin: const Offset(.96, .96)),
             ],
           ],
         ),

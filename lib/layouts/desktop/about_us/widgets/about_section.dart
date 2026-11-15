@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:drip_society/l10n/generated/app_localizations.dart';
 
 class AboutSection extends StatelessWidget {
   const AboutSection({super.key});
@@ -64,11 +65,12 @@ class _AboutCopy extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'ABOUT US',
+          l10n.aboutEyebrow,
           style: TextStyle(
             color: Theme.of(context).colorScheme.primary,
             fontWeight: FontWeight.bold,
@@ -77,7 +79,7 @@ class _AboutCopy extends StatelessWidget {
         ).animate().fade(delay: 120.ms).slideY(begin: .12),
         const SizedBox(height: 18),
         Text(
-          'Brewing Experiences,\nNot Just Coffee.',
+          l10n.aboutHeadline,
           style:
               (isNarrow
                       ? Theme.of(context).textTheme.headlineMedium
@@ -86,23 +88,20 @@ class _AboutCopy extends StatelessWidget {
         ).animate().fade(delay: 220.ms).slideY(begin: .12),
         const SizedBox(height: 24),
         Text(
-          "At Drip Society, we don't simply serve coffee. "
-          'We create an experience that inspires focus, creativity, '
-          'and meaningful conversations. Every cup is crafted with '
-          'care using premium beans and exceptional brewing techniques.',
+          l10n.aboutDescription,
           style: Theme.of(context).textTheme.bodyLarge?.copyWith(height: 1.8),
         ).animate().fade(delay: 320.ms).slideY(begin: .12),
         const SizedBox(height: 34),
-        const _Feature(
-          'Premium Coffee Beans',
+        _Feature(
+          l10n.featurePremiumBeans,
         ).animate().fade(delay: 420.ms).slideY(begin: .12),
         const SizedBox(height: 16),
-        const _Feature(
-          'Expert Coffee',
+        _Feature(
+          l10n.featureExpertCoffee,
         ).animate().fade(delay: 520.ms).slideY(begin: .12),
         const SizedBox(height: 16),
-        const _Feature(
-          'Freshly Brewed Everyday',
+        _Feature(
+          l10n.featureFreshDaily,
         ).animate().fade(delay: 620.ms).slideY(begin: .12),
         const SizedBox(height: 36),
         FilledButton(
@@ -112,9 +111,9 @@ class _AboutCopy extends StatelessWidget {
               await launchUrl(url);
             }
           },
-          child: const Padding(
+          child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 25, vertical: 18),
-            child: Text('Discover More'),
+            child: Text(l10n.discoverMore),
           ),
         ).animate().fade(delay: 720.ms).scale(begin: const Offset(.96, .96)),
       ],

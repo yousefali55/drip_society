@@ -3,16 +3,17 @@ import 'package:drip_society/layouts/desktop/cart/cubit/cart_item_state.dart';
 import 'package:drip_society/layouts/desktop/products/data/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:drip_society/l10n/generated/app_localizations.dart';
 
 class AnimatedCartButton extends StatelessWidget {
   final ProductModel product;
-  final String label;
+  final String? label;
 
   const AnimatedCartButton({
     super.key,
     required this.product,
     required String productId,
-    this.label = 'Add',
+    this.label,
   });
 
   @override
@@ -45,7 +46,7 @@ class AnimatedCartButton extends StatelessWidget {
         onPressed: () {
           context.read<CartCubit>().add(product);
         },
-        child: Text(label),
+        child: Text(label ?? AppLocalizations.of(context)!.add),
       ),
     );
   }

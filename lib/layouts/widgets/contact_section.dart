@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:drip_society/l10n/generated/app_localizations.dart';
 
 class ContactSection extends StatelessWidget {
   const ContactSection({
@@ -20,6 +21,7 @@ class ContactSection extends StatelessWidget {
     final sidePadding =
         horizontalPadding ?? (width * .07).clamp(20.0, 30.0).toDouble();
     final isArabic = Localizations.localeOf(context).languageCode == 'ar';
+    final l10n = AppLocalizations.of(context)!;
     final textDirection = isArabic ? TextDirection.rtl : TextDirection.ltr;
     final crossAxisAlignment = isArabic
         ? CrossAxisAlignment.end
@@ -38,7 +40,7 @@ class ContactSection extends StatelessWidget {
           crossAxisAlignment: crossAxisAlignment,
           children: [
             Text(
-              'CONTACT',
+              l10n.contactEyebrow,
               textAlign: isArabic ? TextAlign.right : TextAlign.left,
               style: TextStyle(
                 color: Theme.of(context).colorScheme.primary,
@@ -48,7 +50,7 @@ class ContactSection extends StatelessWidget {
             ),
             const SizedBox(height: 14),
             Text(
-              'Ready for your next cup?',
+              l10n.contactHeading,
               textAlign: isArabic ? TextAlign.right : TextAlign.left,
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                 fontWeight: FontWeight.bold,
@@ -57,8 +59,7 @@ class ContactSection extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             Text(
-              'Order your favorite Drip Society roast and enjoy a premium '
-              'coffee ritual at home.',
+              l10n.contactDescription,
               textAlign: isArabic ? TextAlign.right : TextAlign.left,
               style: Theme.of(
                 context,
@@ -68,9 +69,7 @@ class ContactSection extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: Align(
-                alignment: isArabic
-                    ? Alignment.centerRight
-                    : Alignment.centerLeft,
+                alignment: AlignmentDirectional.centerStart,
                 child: FilledButton(
                   onPressed: () async {
                     final url = Uri.parse(
@@ -80,9 +79,9 @@ class ContactSection extends StatelessWidget {
                       await launchUrl(url);
                     }
                   },
-                  child: const Padding(
+                  child: Padding(
                     padding: EdgeInsets.symmetric(vertical: 16),
-                    child: Text('Contact Us in facebook'),
+                    child: Text(l10n.contactFacebook),
                   ),
                 ),
               ),
@@ -105,11 +104,5 @@ class ContactSection extends StatelessWidget {
       width: double.infinity,
       child: content,
     ).animate().fade(duration: 500.ms).slideY(begin: .12);
-  }
-
-  void _showContactSnackBar(BuildContext context) {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(const SnackBar(content: Text('Contact coming soon')));
   }
 }

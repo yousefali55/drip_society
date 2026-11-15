@@ -2,6 +2,7 @@ import 'package:drip_society/layouts/desktop/cart/cubit/cart_item_cubit.dart';
 import 'package:drip_society/layouts/desktop/cart/models/cart_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:drip_society/l10n/generated/app_localizations.dart';
 
 class CartItemCard extends StatelessWidget {
   const CartItemCard({super.key, required this.item});
@@ -11,6 +12,8 @@ class CartItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final isArabic = Localizations.localeOf(context).languageCode == 'ar';
+    final l10n = AppLocalizations.of(context)!;
 
     return AnimatedContainer(
       duration: const Duration(milliseconds: 250),
@@ -44,21 +47,17 @@ class CartItemCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  item.product.nameEn,
+                  isArabic && item.product.nameAr.trim().isNotEmpty
+                      ? item.product.nameAr
+                      : item.product.nameEn,
                   style: const TextStyle(fontWeight: FontWeight.bold),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 4),
-                Text(
-                  item.product.nameAr,
-                  style: TextStyle(color: colorScheme.onSurfaceVariant),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
                 const SizedBox(height: 8),
                 Text(
-                  '${item.product.price.toStringAsFixed(0)} EGP',
+                  '${item.product.price.toStringAsFixed(0)} ${l10n.currencyEgp}',
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ],
@@ -69,6 +68,7 @@ class CartItemCard extends StatelessWidget {
               Row(
                 children: [
                   IconButton(
+                    tooltip: l10n.decreaseQuantity,
                     onPressed: () =>
                         context.read<CartCubit>().decrease(item.product),
                     icon: const Icon(Icons.remove_circle_outline),
@@ -81,6 +81,7 @@ class CartItemCard extends StatelessWidget {
                     ),
                   ),
                   IconButton(
+                    tooltip: l10n.increaseQuantity,
                     onPressed: () =>
                         context.read<CartCubit>().increase(item.product),
                     icon: const Icon(Icons.add_circle_outline),
@@ -88,6 +89,7 @@ class CartItemCard extends StatelessWidget {
                 ],
               ),
               IconButton(
+                tooltip: l10n.removeItem,
                 onPressed: () =>
                     context.read<CartCubit>().remove(item.product.id),
                 icon: Icon(Icons.delete_outline, color: colorScheme.error),

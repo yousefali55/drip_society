@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:drip_society/layouts/desktop/cart/widgets/cart_badge.dart';
 import 'package:drip_society/layouts/desktop/hero/data/hero_data.dart';
 import 'package:drip_society/layouts/widgets/logo_app.dart';
+import 'package:drip_society/core/widgets/language_switch_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:drip_society/l10n/generated/app_localizations.dart';
 
 class MobileHeroSection extends StatefulWidget {
   const MobileHeroSection({
@@ -34,7 +36,7 @@ class _MobileHeroSectionState extends State<MobileHeroSection> {
       _timer = Timer.periodic(const Duration(seconds: 5), (_) {
         if (!mounted) return;
         setState(() {
-          _currentIndex = (_currentIndex + 1) % heroItems.length;
+          _currentIndex = (_currentIndex + 1) % heroItemCount;
         });
       });
     }
@@ -50,7 +52,9 @@ class _MobileHeroSectionState extends State<MobileHeroSection> {
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
     final horizontalPadding = (width * .06).clamp(20.0, 30.0).toDouble();
-    final item = heroItems[_currentIndex];
+    final l10n = AppLocalizations.of(context)!;
+    final isArabic = Localizations.localeOf(context).languageCode == 'ar';
+    final item = heroItems(l10n)[_currentIndex];
 
     return Container(
       width: double.infinity,
@@ -67,16 +71,32 @@ class _MobileHeroSectionState extends State<MobileHeroSection> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
-              children: [
-                const LogoApp(),
-                const Spacer(),
-                CartBadge(onTap: widget.onCart),
-                const SizedBox(width: 10),
-                IconButton.filledTonal(
-                  onPressed: widget.onMenuTap,
-                  icon: const Icon(Icons.menu_rounded),
-                ),
-              ],
+              children: isArabic
+                  ? [
+                      IconButton.filledTonal(
+                        onPressed: widget.onMenuTap,
+                        tooltip: l10n.navNavigation,
+                        icon: const Icon(Icons.menu_rounded),
+                      ),
+                      CartBadge(onTap: widget.onCart),
+                      const SizedBox(width: 10),
+                      const LanguageSwitchButton(compact: true),
+                      const Spacer(),
+                      const LogoApp(),
+                    ]
+                  : [
+                      const LogoApp(),
+                      const Spacer(),
+                      CartBadge(onTap: widget.onCart),
+                      const SizedBox(width: 10),
+                      const LanguageSwitchButton(compact: true),
+                      const SizedBox(width: 10),
+                      IconButton.filledTonal(
+                        onPressed: widget.onMenuTap,
+                        tooltip: l10n.navNavigation,
+                        icon: const Icon(Icons.menu_rounded),
+                      ),
+                    ],
             ).animate().fade(duration: 450.ms).slideY(begin: -.16),
             const SizedBox(height: 38),
             AnimatedSwitcher(
@@ -88,7 +108,7 @@ class _MobileHeroSectionState extends State<MobileHeroSection> {
                   opacity: animation,
                   child: SlideTransition(
                     position: Tween<Offset>(
-                      begin: const Offset(.06, .04),
+                      begin: Offset(isArabic ? -.06 : .06, .04),
                       end: Offset.zero,
                     ).animate(animation),
                     child: child,
@@ -129,9 +149,9 @@ class _MobileHeroSectionState extends State<MobileHeroSection> {
                     child: FilledButton.icon(
                       onPressed: widget.onExplore,
                       icon: const Icon(Icons.local_cafe_rounded),
-                      label: const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 16),
-                        child: Text('Explore Products'),
+                      label: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        child: Text(l10n.exploreProducts),
                       ),
                     ),
                   ),

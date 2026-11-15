@@ -1,5 +1,6 @@
 import 'package:drip_society/core/theme/theme_switch.dart';
 import 'package:drip_society/layouts/widgets/logo_app.dart';
+import 'package:drip_society/l10n/generated/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
@@ -19,6 +20,7 @@ class MobileNavigationDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Drawer(
       child: SafeArea(
         child: Padding(
@@ -32,6 +34,7 @@ class MobileNavigationDrawer extends StatelessWidget {
                   const Spacer(),
                   IconButton(
                     onPressed: () => Navigator.of(context).pop(),
+                    tooltip: l10n.close,
                     icon: const Icon(Icons.close_rounded),
                   ),
                 ],
@@ -39,22 +42,22 @@ class MobileNavigationDrawer extends StatelessWidget {
               const SizedBox(height: 36),
               _DrawerItem(
                 icon: Icons.home_rounded,
-                label: 'Home',
+                label: l10n.navHome,
                 onTap: () => _navigate(context, onHome),
               ),
               _DrawerItem(
                 icon: Icons.info_rounded,
-                label: 'About',
+                label: l10n.navAbout,
                 onTap: () => _navigate(context, onAbout),
               ),
               _DrawerItem(
                 icon: Icons.local_cafe_rounded,
-                label: 'Products',
+                label: l10n.navProducts,
                 onTap: () => _navigate(context, onProducts),
               ),
               _DrawerItem(
                 icon: Icons.call_rounded,
-                label: 'Contact',
+                label: l10n.navContact,
                 onTap: () => _navigate(context, onContact),
               ),
               const SizedBox(height: 28),
@@ -69,7 +72,7 @@ class MobileNavigationDrawer extends StatelessWidget {
                   ),
                   const SizedBox(width: 14),
                   Text(
-                    'Theme',
+                    l10n.theme,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.w700,
                     ),
@@ -83,7 +86,7 @@ class MobileNavigationDrawer extends StatelessWidget {
           ),
         ),
       ),
-    ).animate().fade(duration: 300.ms).slideX(begin: -.08);
+    ).animate().fade(duration: 300.ms);
   }
 
   void _navigate(BuildContext context, VoidCallback onTap) {

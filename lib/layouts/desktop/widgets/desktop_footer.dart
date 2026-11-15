@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:drip_society/l10n/generated/app_localizations.dart';
 
 class DesktopFooter extends StatelessWidget {
   const DesktopFooter({super.key, required this.onNavTap});
@@ -24,86 +25,115 @@ class DesktopFooter extends StatelessWidget {
 
     return Directionality(
       textDirection: textDirection,
-      child: Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              colorScheme.surface.withValues(alpha: 0.96),
-              colorScheme.surfaceContainerHighest.withValues(alpha: 0.28),
-            ],
-          ),
-          border: Border(
-            top: BorderSide(
-              color: colorScheme.outlineVariant.withValues(alpha: 0.65),
-            ),
-          ),
-        ),
-        child: Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 1240),
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(
-                isNarrow ? 24 : 36,
-                isNarrow ? 48 : 64,
-                isNarrow ? 24 : 36,
-                isNarrow ? 32 : 40,
-              ),
-              child: Column(
-                children: [
-                  Container(
-                    padding: EdgeInsets.fromLTRB(
-                      isNarrow ? 24 : 30,
-                      isNarrow ? 26 : 32,
-                      isNarrow ? 24 : 30,
-                      isNarrow ? 26 : 32,
-                    ),
-                    decoration: BoxDecoration(
-                      color: colorScheme.surface.withValues(alpha: 0.84),
-                      borderRadius: BorderRadius.circular(28),
-                      border: Border.all(
-                        color: colorScheme.outlineVariant.withValues(alpha: 0.55),
+      child:
+          Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: isArabic ? Alignment.topRight : Alignment.topLeft,
+                    end: isArabic
+                        ? Alignment.bottomLeft
+                        : Alignment.bottomRight,
+                    colors: [
+                      colorScheme.surface.withValues(alpha: 0.96),
+                      colorScheme.surfaceContainerHighest.withValues(
+                        alpha: 0.28,
                       ),
-                      boxShadow: [
-                        BoxShadow(
-                          color: colorScheme.shadow.withValues(alpha: 0.08),
-                          blurRadius: 28,
-                          offset: const Offset(0, 16),
-                        ),
-                      ],
+                    ],
+                  ),
+                  border: Border(
+                    top: BorderSide(
+                      color: colorScheme.outlineVariant.withValues(alpha: 0.65),
                     ),
-                    child: isNarrow
-                        ? Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              _BrandColumn(onNavTap: onNavTap),
-                              const SizedBox(height: 24),
-                              const _FooterContactPanel(),
-                            ],
-                          )
-                        : Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(child: _BrandColumn(onNavTap: onNavTap)),
-                              const SizedBox(width: 24),
-                              Expanded(child: const _FooterContactPanel()),
-                            ],
+                  ),
+                ),
+                child: Center(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 1240),
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(
+                        isNarrow ? 24 : 36,
+                        isNarrow ? 48 : 64,
+                        isNarrow ? 24 : 36,
+                        isNarrow ? 32 : 40,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: isArabic
+                            ? CrossAxisAlignment.end
+                            : CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.fromLTRB(
+                              isNarrow ? 24 : 30,
+                              isNarrow ? 26 : 32,
+                              isNarrow ? 24 : 30,
+                              isNarrow ? 26 : 32,
+                            ),
+                            decoration: BoxDecoration(
+                              color: colorScheme.surface.withValues(
+                                alpha: 0.84,
+                              ),
+                              borderRadius: BorderRadius.circular(28),
+                              border: Border.all(
+                                color: colorScheme.outlineVariant.withValues(
+                                  alpha: 0.55,
+                                ),
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: colorScheme.shadow.withValues(
+                                    alpha: 0.08,
+                                  ),
+                                  blurRadius: 28,
+                                  offset: const Offset(0, 16),
+                                ),
+                              ],
+                            ),
+                            child: isNarrow
+                                ? Column(
+                                    crossAxisAlignment: isArabic
+                                        ? CrossAxisAlignment.end
+                                        : CrossAxisAlignment.start,
+                                    children: [
+                                      _BrandColumn(onNavTap: onNavTap),
+                                      const SizedBox(height: 24),
+                                      const _FooterContactPanel(),
+                                    ],
+                                  )
+                                : Row(
+                                    textDirection: textDirection,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Expanded(
+                                        flex: 5,
+                                        child: _BrandColumn(onNavTap: onNavTap),
+                                      ),
+                                      const SizedBox(width: 40),
+                                      const Expanded(
+                                        flex: 6,
+                                        child: _FooterContactPanel(),
+                                      ),
+                                    ],
+                                  ),
                           ),
+                          const SizedBox(height: 26),
+                          Divider(
+                            color: colorScheme.outlineVariant.withValues(
+                              alpha: 0.75,
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+                          const _FooterBottom(),
+                        ],
+                      ),
+                    ),
                   ),
-                  const SizedBox(height: 26),
-                  Divider(
-                    color: colorScheme.outlineVariant.withValues(alpha: 0.75),
-                  ),
-                  const SizedBox(height: 20),
-                  const _FooterBottom(),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ).animate().fade(duration: 650.ms).slideY(begin: .08, curve: Curves.easeOutCubic),
+                ),
+              )
+              .animate()
+              .fade(duration: 650.ms)
+              .slideY(begin: .08, curve: Curves.easeOutCubic),
     );
   }
 }
@@ -118,27 +148,43 @@ class _BrandColumn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isArabic = Localizations.localeOf(context).languageCode == 'ar';
+    final l10n = AppLocalizations.of(context)!;
 
     return Column(
-      crossAxisAlignment: isArabic ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+      crossAxisAlignment: isArabic
+          ? CrossAxisAlignment.end
+          : CrossAxisAlignment.start,
       children: [
         const LogoApp(),
         const SizedBox(height: 18),
         Text(
-          'Premium coffee rituals for slow mornings, focused work, and meaningful conversations.',
+          l10n.footerBrandDescription,
           textAlign: isArabic ? TextAlign.right : TextAlign.left,
           style: Theme.of(context).textTheme.bodyLarge?.copyWith(height: 1.8),
         ),
         const SizedBox(height: 24),
         Wrap(
+          textDirection: Directionality.of(context),
           alignment: isArabic ? WrapAlignment.end : WrapAlignment.start,
           spacing: 12,
           runSpacing: 10,
           children: [
-            _FooterNavButton(label: 'Home', onTap: () => onNavTap(FooterNavTarget.home)),
-            _FooterNavButton(label: 'About Us', onTap: () => onNavTap(FooterNavTarget.about)),
-            _FooterNavButton(label: 'Products', onTap: () => onNavTap(FooterNavTarget.products)),
-            _FooterNavButton(label: 'Contact', onTap: () => onNavTap(FooterNavTarget.contact)),
+            _FooterNavButton(
+              label: l10n.navHome,
+              onTap: () => onNavTap(FooterNavTarget.home),
+            ),
+            _FooterNavButton(
+              label: l10n.navAboutUs,
+              onTap: () => onNavTap(FooterNavTarget.about),
+            ),
+            _FooterNavButton(
+              label: l10n.navProducts,
+              onTap: () => onNavTap(FooterNavTarget.products),
+            ),
+            _FooterNavButton(
+              label: l10n.navContact,
+              onTap: () => onNavTap(FooterNavTarget.contact),
+            ),
           ],
         ),
       ],
@@ -213,42 +259,65 @@ class _FooterBottom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isArabic = Localizations.localeOf(context).languageCode == 'ar';
-
-    return Wrap(
-      alignment: WrapAlignment.center,
-      crossAxisAlignment: WrapCrossAlignment.center,
-      spacing: 20,
-      runSpacing: 18,
+    final l10n = AppLocalizations.of(context)!;
+    final credit = Text(
+      l10n.footerCredit,
+      textAlign: TextAlign.center,
+      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+        color: Theme.of(context).colorScheme.onSurfaceVariant,
+        fontWeight: FontWeight.w600,
+      ),
+    );
+    final socialLinks = Wrap(
+      textDirection: Directionality.of(context),
+      alignment: WrapAlignment.start,
+      spacing: 12,
+      runSpacing: 12,
       children: [
-        Text(
-          'Developed by Eng: Yousef Ali',
-          textAlign: isArabic ? TextAlign.right : TextAlign.left,
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-            fontWeight: FontWeight.w700,
-          ),
+        _SocialIcon(
+          tooltip: 'Facebook',
+          icon: Icons.facebook_rounded,
+          url: DesktopFooter._facebookUrl,
         ),
-        Wrap(
-          spacing: 12,
-          children: [
-            _SocialIcon(
-              tooltip: 'Facebook',
-              icon: Icons.facebook_rounded,
-              url: DesktopFooter._facebookUrl,
-            ),
-            _SocialIcon(
-              tooltip: 'LinkedIn',
-              icon: Icons.work_rounded,
-              url: DesktopFooter._linkedInUrl,
-            ),
-            _SocialIcon(
-              tooltip: 'GitHub',
-              icon: Icons.code_rounded,
-              url: DesktopFooter._githubUrl,
-            ),
-          ],
+        _SocialIcon(
+          tooltip: 'LinkedIn',
+          icon: Icons.work_rounded,
+          url: DesktopFooter._linkedInUrl,
+        ),
+        _SocialIcon(
+          tooltip: 'GitHub',
+          icon: Icons.code_rounded,
+          url: DesktopFooter._githubUrl,
         ),
       ],
+    );
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (constraints.maxWidth < 600) {
+          return Column(
+            children: [
+              Center(child: socialLinks),
+              const SizedBox(height: 16),
+              SizedBox(width: double.infinity, child: credit),
+            ],
+          );
+        }
+
+        return Row(
+          textDirection: Directionality.of(context),
+          children: [
+            Expanded(
+              child: Align(
+                alignment: AlignmentDirectional.centerStart,
+                child: socialLinks,
+              ),
+            ),
+            Expanded(child: Center(child: credit)),
+            const Expanded(child: SizedBox.shrink()),
+          ],
+        );
+      },
     );
   }
 }
@@ -304,7 +373,9 @@ class _SocialIconState extends State<_SocialIcon> {
               ),
               child: Icon(
                 widget.icon,
-                color: _hovering ? colorScheme.primary : colorScheme.onSurfaceVariant,
+                color: _hovering
+                    ? colorScheme.primary
+                    : colorScheme.onSurfaceVariant,
                 size: 20,
               ),
             ),

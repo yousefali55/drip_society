@@ -8,12 +8,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:drip_society/l10n/generated/app_localizations.dart';
 
 class ProductsSection extends StatelessWidget {
   const ProductsSection({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
@@ -28,7 +30,7 @@ class ProductsSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                'OUR PRODUCTS',
+                l10n.productsEyebrow,
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.primary,
                   letterSpacing: 3,
@@ -36,13 +38,13 @@ class ProductsSection extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 15),
-              const Text(
-                'Premium Coffee Collection',
+              Text(
+                l10n.productsHeading,
                 style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 12),
               Text(
-                    'Discover handcrafted premium coffee beans carefully roasted to bring unforgettable flavor in every cup.',
+                    l10n.productsDescription,
                     textAlign: TextAlign.center,
                     style: const TextStyle(fontSize: 30, height: 1.8),
                   )
@@ -68,7 +70,7 @@ class ProductsSection extends StatelessWidget {
                     : isError
                     ? ErrorView(
                         key: const ValueKey('error'),
-                        message: state.exception.message,
+                        errorType: state.exception.errorType,
                         onRetry: () =>
                             context.read<ProductsCubit>().getProducts(),
                       )
@@ -124,7 +126,7 @@ class _EmptyProductsView extends StatelessWidget {
   Widget build(BuildContext context) => Padding(
     padding: const EdgeInsets.all(24),
     child: Text(
-      'No products are available right now.',
+      AppLocalizations.of(context)!.noProducts,
       style: Theme.of(context).textTheme.bodyLarge,
       textAlign: TextAlign.center,
     ),

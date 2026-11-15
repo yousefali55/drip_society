@@ -4,6 +4,7 @@ import 'package:drip_society/layouts/desktop/hero/data/hero_data.dart';
 import 'package:drip_society/layouts/desktop/hero/widgets/hero_content.dart';
 import 'package:drip_society/layouts/desktop/hero/widgets/hero_image.dart';
 import 'package:flutter/material.dart';
+import 'package:drip_society/l10n/generated/app_localizations.dart';
 
 class HeroSection extends StatefulWidget {
   const HeroSection({super.key, required this.onExplore});
@@ -27,7 +28,7 @@ class _HeroSectionState extends State<HeroSection> {
       timer = Timer.periodic(const Duration(seconds: 5), (_) {
         if (!mounted) return;
         setState(() {
-          currentIndex = (currentIndex + 1) % heroItems.length;
+          currentIndex = (currentIndex + 1) % heroItemCount;
         });
       });
     }
@@ -41,7 +42,8 @@ class _HeroSectionState extends State<HeroSection> {
 
   @override
   Widget build(BuildContext context) {
-    final item = heroItems[currentIndex];
+    final item = heroItems(AppLocalizations.of(context)!)[currentIndex];
+    final isArabic = Localizations.localeOf(context).languageCode == 'ar';
     final compact = MediaQuery.of(context).size.width < 900;
 
     return SizedBox(
@@ -58,7 +60,7 @@ class _HeroSectionState extends State<HeroSection> {
               opacity: animation,
               child: SlideTransition(
                 position: Tween<Offset>(
-                  begin: const Offset(0.08, 0),
+                  begin: Offset(isArabic ? -0.08 : 0.08, 0),
                   end: Offset.zero,
                 ).animate(animation),
                 child: child,
@@ -74,7 +76,7 @@ class _HeroSectionState extends State<HeroSection> {
                       child: HeroContent(
                         item: item,
                         currentIndex: currentIndex,
-                        itemCount: heroItems.length,
+                        itemCount: heroItemCount,
                         onExplore: widget.onExplore,
                       ),
                     ),
@@ -94,7 +96,7 @@ class _HeroSectionState extends State<HeroSection> {
                       child: HeroContent(
                         item: item,
                         currentIndex: currentIndex,
-                        itemCount: heroItems.length,
+                        itemCount: heroItemCount,
                         onExplore: widget.onExplore,
                       ),
                     ),

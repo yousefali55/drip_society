@@ -18,7 +18,7 @@ class HeroIndicator extends StatelessWidget {
 
         return AnimatedContainer(
           duration: const Duration(milliseconds: 250),
-          margin: const EdgeInsets.only(right: 8),
+          margin: const EdgeInsetsDirectional.only(end: 8),
           height: 3,
           width: active ? 42 : 26,
           decoration: BoxDecoration(

@@ -1,6 +1,7 @@
 import 'package:drip_society/layouts/desktop/hero/model/hero_model.dart';
 import 'package:drip_society/layouts/desktop/hero/widgets/hero_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:drip_society/l10n/generated/app_localizations.dart';
 
 class HeroContent extends StatelessWidget {
   const HeroContent({
@@ -18,12 +19,13 @@ class HeroContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final width = MediaQuery.sizeOf(context).width;
     final compact = width < 900;
     final subtitleSize = compact ? 46.0 : 74.0;
 
     return Padding(
-      padding: EdgeInsets.only(left: compact ? 0 : 80),
+      padding: EdgeInsetsDirectional.only(start: compact ? 0 : 80),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,9 +56,9 @@ class HeroContent extends StatelessWidget {
           const SizedBox(height: 45),
           FilledButton(
             onPressed: onExplore,
-            child: const Padding(
+            child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 24, vertical: 18),
-              child: Text("Explore Products"),
+              child: Text(l10n.exploreProducts),
             ),
           ),
           const SizedBox(height: 24),

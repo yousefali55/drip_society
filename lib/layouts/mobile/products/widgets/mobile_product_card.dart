@@ -4,6 +4,7 @@ import 'package:drip_society/layouts/desktop/products/widgets/product_image.dart
 import 'package:drip_society/layouts/desktop/products/widgets/product_price.dart';
 import 'package:drip_society/layouts/desktop/products/widgets/product_title.dart';
 import 'package:flutter/material.dart';
+import 'package:drip_society/l10n/generated/app_localizations.dart';
 
 class MobileProductCard extends StatelessWidget {
   const MobileProductCard({super.key, required this.product});
@@ -47,7 +48,7 @@ class MobileProductCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(999),
               ),
               child: Text(
-                '200g',
+                AppLocalizations.of(context)!.grams200,
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.primary,
                   fontWeight: FontWeight.w800,
@@ -61,7 +62,7 @@ class MobileProductCard extends StatelessWidget {
             AnimatedCartButton(
               product: product,
               productId: product.id,
-              label: 'Add To Cart',
+              label: AppLocalizations.of(context)!.addToCart,
             ),
           ],
         ),

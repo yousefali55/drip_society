@@ -8,6 +8,7 @@ import 'package:drip_society/layouts/desktop/cart/widgets/confirm_order_button.d
 import 'package:drip_society/layouts/desktop/cart/widgets/empty_cart_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:drip_society/l10n/generated/app_localizations.dart';
 
 class CartDrawer extends StatefulWidget {
   const CartDrawer({super.key});
@@ -25,9 +26,9 @@ class _CartDrawerState extends State<CartDrawer> {
     if (cubit.state.items.isEmpty) {
       if (!mounted) return;
 
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('Your cart is empty')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(AppLocalizations.of(context)!.emptyCartMessage)),
+      );
       return;
     }
 
@@ -65,6 +66,7 @@ class _CartDrawerState extends State<CartDrawer> {
   }
 
   Widget _buildDrawer(BuildContext context, CartState state, bool isEmpty) {
+    final l10n = AppLocalizations.of(context)!;
     return Drawer(
       width: 420,
       child: SafeArea(
@@ -75,13 +77,14 @@ class _CartDrawerState extends State<CartDrawer> {
             children: [
               Row(
                 children: [
-                  const Text(
-                    'Your Cart',
+                  Text(
+                    l10n.cartTitle,
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                   const Spacer(),
                   IconButton(
                     onPressed: () => Navigator.of(context).pop(),
+                    tooltip: l10n.close,
                     icon: const Icon(Icons.close),
                   ),
                 ],
@@ -121,6 +124,7 @@ class _CartDrawerState extends State<CartDrawer> {
   }
 
   Widget _buildSheet(BuildContext context, CartState state, bool isEmpty) {
+    final l10n = AppLocalizations.of(context)!;
     final mediaQuery = MediaQuery.of(context);
     final bottomInset = mediaQuery.viewInsets.bottom;
     final topGap = mediaQuery.padding.top + 20;
@@ -191,8 +195,8 @@ class _CartDrawerState extends State<CartDrawer> {
                           const SizedBox(height: 18),
                           Row(
                             children: [
-                              const Text(
-                                'Your Cart',
+                              Text(
+                                l10n.cartTitle,
                                 style: TextStyle(
                                   fontSize: 22,
                                   fontWeight: FontWeight.bold,
@@ -201,6 +205,7 @@ class _CartDrawerState extends State<CartDrawer> {
                               const Spacer(),
                               IconButton.filledTonal(
                                 onPressed: () => Navigator.of(context).pop(),
+                                tooltip: l10n.close,
                                 icon: const Icon(Icons.close_rounded),
                               ),
                             ],

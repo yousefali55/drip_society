@@ -1,28 +1,25 @@
 import 'package:drip_society/layouts/desktop/hero/model/hero_model.dart';
+import 'package:drip_society/l10n/generated/app_localizations.dart';
 
-const heroItems = [
+const heroItemCount = 3;
 
+List<HeroModel> heroItems(AppLocalizations l10n) => [
   HeroModel(
-    title: "Every Bean",
-    subtitle: "Tells a Story",
-    description:
-        "Carefully selected premium coffee beans, roasted to deliver rich flavor, unforgettable aroma, and moments worth savoring.",
-    image: "assets/images/land1.png",
+    title: l10n.heroBeanTitle,
+    subtitle: l10n.heroBeanSubtitle,
+    description: l10n.heroBeanDescription,
+    image: 'assets/images/land1.png',
   ),
-
   HeroModel(
-    title: "Brew the",
-    subtitle: "Perfect Moment",
-    description:
-        "Whether you're starting your morning or taking a well-earned break, every cup is crafted to inspire your day.",
-    image: "assets/images/land2.png",
+    title: l10n.heroBrewTitle,
+    subtitle: l10n.heroBrewSubtitle,
+    description: l10n.heroBrewDescription,
+    image: 'assets/images/land2.png',
   ),
-
   HeroModel(
-    title: "Pure Coffee.",
-    subtitle: "Pure Passion.",
-    description:
-        "Experience authentic premium coffee made from the finest beans, created for people who appreciate exceptional quality.",
-    image: "assets/images/land3.png",
+    title: l10n.heroPureTitle,
+    subtitle: l10n.heroPureSubtitle,
+    description: l10n.heroPureDescription,
+    image: 'assets/images/land3.png',
   ),
 ];

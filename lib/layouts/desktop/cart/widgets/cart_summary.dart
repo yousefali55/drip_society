@@ -1,5 +1,6 @@
 import 'package:drip_society/layouts/desktop/cart/cubit/cart_item_state.dart';
 import 'package:flutter/material.dart';
+import 'package:drip_society/l10n/generated/app_localizations.dart';
 
 class CartSummary extends StatelessWidget {
   const CartSummary({super.key, required this.state});
@@ -10,6 +11,7 @@ class CartSummary extends StatelessWidget {
   Widget build(BuildContext context) {
     final subtotal = state.totalPrice;
     final total = subtotal;
+    final l10n = AppLocalizations.of(context)!;
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -21,9 +23,16 @@ class CartSummary extends StatelessWidget {
       ),
       child: Column(
         children: [
-          _summaryRow('Subtotal', '${subtotal.toStringAsFixed(0)} EGP'),
+          _summaryRow(
+            l10n.subtotal,
+            '${subtotal.toStringAsFixed(0)} ${l10n.currencyEgp}',
+          ),
           const Divider(height: 20),
-          _summaryRow('Total', '${total.toStringAsFixed(0)} EGP', isBold: true),
+          _summaryRow(
+            l10n.total,
+            '${total.toStringAsFixed(0)} ${l10n.currencyEgp}',
+            isBold: true,
+          ),
         ],
       ),
     );

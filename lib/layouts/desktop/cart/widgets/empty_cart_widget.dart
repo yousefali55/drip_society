@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:drip_society/l10n/generated/app_localizations.dart';
 
 class EmptyCartWidget extends StatelessWidget {
   const EmptyCartWidget({super.key, required this.onContinueShopping});
@@ -7,22 +8,35 @@ class EmptyCartWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final isArabic = Localizations.localeOf(context).languageCode == 'ar';
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(24),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.shopping_cart_outlined, size: 72, color: Theme.of(context).colorScheme.primary),
+            Icon(
+              Icons.shopping_cart_outlined,
+              size: 72,
+              color: Theme.of(context).colorScheme.primary,
+            ),
             const SizedBox(height: 16),
-            const Text('Your cart is empty', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+            Text(
+              l10n.cartEmpty,
+              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            ),
             const SizedBox(height: 8),
-            const Text('Add some premium coffee to continue.', textAlign: TextAlign.center),
+            Text(l10n.cartEmptyDescription, textAlign: TextAlign.center),
             const SizedBox(height: 20),
             FilledButton.icon(
               onPressed: onContinueShopping,
-              icon: const Icon(Icons.arrow_back_ios_new_rounded),
-              label: const Text('Continue Shopping'),
+              icon: Icon(
+                isArabic
+                    ? Icons.arrow_forward_ios_rounded
+                    : Icons.arrow_back_ios_new_rounded,
+              ),
+              label: Text(l10n.continueShopping),
             ),
           ],
         ),

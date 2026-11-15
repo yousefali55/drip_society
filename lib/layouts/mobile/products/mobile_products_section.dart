@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+import 'package:drip_society/l10n/generated/app_localizations.dart';
 
 class MobileProductsSection extends StatelessWidget {
   const MobileProductsSection({super.key});
@@ -14,6 +15,7 @@ class MobileProductsSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
     final horizontalPadding = (width * .05).clamp(16.0, 24.0).toDouble();
+    final l10n = AppLocalizations.of(context)!;
 
     return Container(
       width: double.infinity,
@@ -33,7 +35,7 @@ class MobileProductsSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                'OUR PRODUCTS',
+                l10n.productsEyebrow,
                 style: TextStyle(
                   color: Theme.of(context).colorScheme.primary,
                   letterSpacing: 3,
@@ -42,7 +44,7 @@ class MobileProductsSection extends StatelessWidget {
               ).animate().fade(duration: 450.ms).slideY(begin: .12),
               const SizedBox(height: 14),
               Text(
-                'Premium Coffee Collection',
+                l10n.productsHeading,
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                   fontWeight: FontWeight.bold,
@@ -51,7 +53,7 @@ class MobileProductsSection extends StatelessWidget {
               ).animate().fade(delay: 100.ms).slideY(begin: .12),
               const SizedBox(height: 12),
               Text(
-                    'Discover handcrafted premium coffee beans carefully roasted to bring unforgettable flavor in every cup.',
+                    l10n.productsDescription,
                     textAlign: TextAlign.center,
                     style: const TextStyle(fontSize: 20, height: 1.8),
                   )
@@ -82,16 +84,16 @@ class MobileProductsSection extends StatelessWidget {
                     : isError
                     ? ErrorView(
                         key: const ValueKey('error'),
-                        message: state.exception.message,
+                        errorType: state.exception.errorType,
                         onRetry: () =>
                             context.read<ProductsCubit>().getProducts(),
                       )
                     : isSuccess && state.products.isEmpty
-                    ? const Padding(
+                    ? Padding(
                         key: ValueKey('no-products'),
                         padding: EdgeInsets.all(24),
                         child: Text(
-                          'No products are available right now.',
+                          l10n.noProducts,
                           textAlign: TextAlign.center,
                         ),
                       )
