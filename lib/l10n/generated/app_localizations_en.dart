@@ -292,9 +292,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'Premium coffee rituals for slow mornings, focused work, and meaningful conversations.';
 
   @override
-  String get footerCredit => 'Developed by Yousef Ali';
-
-  @override
   String get theme => 'Theme';
 
   @override

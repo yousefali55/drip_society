@@ -210,14 +210,10 @@ void _expectFooterOrder(
   final contactHeading = isArabic
       ? 'جاهز لفنجانك الجاي؟'
       : 'Ready for your next cup?';
-  final developerCredit = isArabic
-      ? 'تنفيذ يوسف علي'
-      : 'Developed by Yousef Ali';
   final brandText = tester.widget<Text>(find.text(brandDescription));
   final contactText = tester.widget<Text>(find.text(contactHeading));
-  final creditFinder = find.text(developerCredit);
-  expect(creditFinder, findsOneWidget);
-  expect(tester.getRect(creditFinder).center.dx, closeTo(width / 2, 1));
+  expect(find.text('تنفيذ يوسف علي'), findsNothing);
+  expect(find.text('Developed by Yousef Ali'), findsNothing);
 
   if (width >= 860) {
     final brandX = tester.getRect(find.text(brandDescription)).center.dx;

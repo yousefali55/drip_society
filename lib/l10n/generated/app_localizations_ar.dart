@@ -18,7 +18,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get navHome => 'الرئيسية';
 
   @override
-  String get navAboutUs => 'عننا';
+  String get navAboutUs => 'من نحن';
 
   @override
   String get navAbout => 'عننا';
@@ -27,7 +27,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get navProducts => 'المنيو';
 
   @override
-  String get navContact => 'كلمنا';
+  String get navContact => 'اتصل بنا';
 
   @override
   String get navNavigation => 'القائمة';
@@ -36,7 +36,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get orderNow => 'اطلب دلوقتي';
 
   @override
-  String get exploreProducts => 'شوف منتجاتنا';
+  String get exploreProducts => 'تعرف على منتجاتنا';
 
   @override
   String get discoverMore => 'اعرف أكتر';
@@ -58,7 +58,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get featureExpertCoffee => 'قهوة معمولة على أصولها';
 
   @override
-  String get featureFreshDaily => 'قهوة طازة كل يوم';
+  String get featureFreshDaily => 'قهوة طازجة كل يوم';
 
   @override
   String get heroBeanTitle => 'كل حباية';
@@ -98,7 +98,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get productsDescription =>
-      'اكتشف حبوب قهوة مختارة ومتحمّصة بعناية، عشان كل فنجان يبقى بطعم مايتنسيش.';
+      'اكتشف حبوب قهوة مختارة ومحمصة بعناية، عشان كل فنجان يبقى بطعم مايتنسيش.';
 
   @override
   String get noProducts => 'مفيش منتجات متاحة دلوقتي.';
@@ -110,10 +110,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get retry => 'جرّب تاني';
 
   @override
-  String get addToCart => 'ضيف للسلة';
+  String get addToCart => 'أضف للسلة';
 
   @override
-  String get add => 'ضيف';
+  String get add => 'أضف للسلة';
 
   @override
   String get grams200 => '٢٠٠ جم';
@@ -285,14 +285,11 @@ class AppLocalizationsAr extends AppLocalizations {
       'اطلب تحميصتك المفضلة من Drip Society واستمتع بفنجان قهوة مميز في بيتك.';
 
   @override
-  String get contactFacebook => 'كلمنا على فيسبوك';
+  String get contactFacebook => 'تابعنا على فيسبوك';
 
   @override
   String get footerBrandDescription =>
       'قهوتك المفضلة لصباح رايق، وتركيز أحسن، وقعدة حلوة مع اللي بتحبهم.';
-
-  @override
-  String get footerCredit => 'تنفيذ يوسف علي';
 
   @override
   String get theme => 'المظهر';

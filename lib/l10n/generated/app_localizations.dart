@@ -650,12 +650,6 @@ abstract class AppLocalizations {
   /// **'Premium coffee rituals for slow mornings, focused work, and meaningful conversations.'**
   String get footerBrandDescription;
 
-  /// No description provided for @footerCredit.
-  ///
-  /// In en, this message translates to:
-  /// **'Developed by Yousef Ali'**
-  String get footerCredit;
-
   /// No description provided for @theme.
   ///
   /// In en, this message translates to:
